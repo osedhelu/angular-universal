@@ -22,6 +22,15 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "chart.js",
+              "web3",
+              "js-sha3",
+              "hammerjs",
+              "hash.js",
+              "devextreme-angular",
+              "devextreme"
+            ],
             "aot": true,
             "assets": [
               "src/favicon.ico",

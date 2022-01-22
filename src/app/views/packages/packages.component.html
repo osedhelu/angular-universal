@@ -1,0 +1,142 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4" *ngFor="let house of houses">
+      <div class="card card-chart">
+        <div class="card-body p-0 m-0">
+          <div (click)="showHouse(house)" class="item-content">
+            <img [class]="house?.status?'gris':''" src="{{ house?.img }}" />
+            <div class="item-options">
+              <div>
+                <div class="address">{{ house?.name }}</div>
+                <div class="price large-text">
+                  {{ house.Price | currency: "USD":"symbol":"1.0-0" }}
+                </div>
+                <div class="agent" *ngIf="house.Favorite">
+                  <div id="house{{ house.ID }}">
+                    <i class="now-ui-icons yafuz-success"></i>
+                  </div>
+                </div>
+                <div class="agent" *ngIf="house.status">
+                  <div id="house{{ house.ID }}">
+                    <i class="line">vendido</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <dx-popover target="#house{{ house.ID }}" showEvent="mouseenter" hideEvent="mouseleave"
+              contentTemplate="popoverContent" [width]="260">
+              <dxo-position at="bottom" my="top" offset="0 2" collision="fit flip">
+              </dxo-position>
+              <div *dxTemplate="let data of 'popoverContent'">
+                <div class="agent-details">
+                  <img src="{{ house.Agent.Picture }}" />
+                  <div>
+                    <div class="name large-text">{{ house.Agent.Name }}</div>
+                    <div class="phone">Tel: {{ house.Agent.Phone }}</div>
+                  </div>
+                </div>
+              </div>
+            </dx-popover> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+   <div class="popup-property-details">
+        
+       
+       
+      </div>
+    </div>
+ -->
+  <dx-popup [showTitle]="true" [width]="dimencion" [title]="currentHouse?.name" [dragEnabled]="false"
+    [closeOnOutsideClick]="true" [(visible)]="popupVisible">
+
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view width="100%">
+        <div id='page'>
+          <dx-responsive-box id="responsiveBox" singleColumnScreen="sm" [screenByWidth]="screen">
+            <dxi-row [ratio]="1"></dxi-row>
+            <dxi-row [ratio]="1" screen="xs"></dxi-row>
+            <dxi-row [ratio]="1" screen="lg"></dxi-row>
+            <dxi-row [ratio]="1"></dxi-row>
+
+            <dxi-col [ratio]="1" screen="lg"></dxi-col>
+            <dxi-col [ratio]="1"></dxi-col>
+
+            <dxi-item>
+              <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
+              <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+              <div class="large-text">{{
+                currentHouse.Price | currency: "USD":"symbol":"1.0-0"
+                }}</div>
+              <div class="opacity">{{ currentHouse?.name }}
+                <br> <b>receives: </b> {{ currentHouse?.receives | currency: "USD":"symbol":"1.0-0"}}
+                <br> <b>commission: </b> {{ currentHouse.commission }}
+              </div>
+              <dx-button [disabled]="btnComprar" class="favorites" [text]="
+            currentHouse.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES
+          " icon="favorites" [height]="44" (onClick)="changeFavoriteState($event)">
+              </dx-button>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
+              <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
+              <div class="images">
+                <img src="{{ currentHouse.img }}" />
+              </div>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
+              <dxi-location [row]="2" [col]="0" screen="sm"></dxi-location>
+              <div class="images">
+                <img src="{{ currentHouse.img.replace('.jpg', 'b.jpg') }}" />
+              </div>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
+              <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+              <div>{{ currentHouse.Features }}</div>
+            </dxi-item>
+          </dx-responsive-box>
+        </div>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+  <dx-popup [showTitle]="true" [width]="dimencion" [title]="currentHouse?.name" [dragEnabled]="false"
+    [closeOnOutsideClick]="true" [(visible)]="popupFram">
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view width="100%">
+        <div id='page'>
+          <dx-responsive-box id="responsiveBox" singleColumnScreen="sm" [screenByWidth]="screen">
+            <dxi-row [ratio]="1"></dxi-row>
+            <dxi-row [ratio]="1" screen="xs"></dxi-row>
+            <dxi-row [ratio]="1" screen="lg"></dxi-row>
+            <dxi-row [ratio]="1"></dxi-row>
+            <dxi-col [ratio]="1" screen="lg"></dxi-col>
+            <dxi-col [ratio]="1"></dxi-col>
+            <dxi-item>
+              <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
+              <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
+              <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
+              <dxi-location [row]="2" [col]="0" screen="sm"></dxi-location>
+            </dxi-item>
+            <dxi-item>
+              <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
+              <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+            </dxi-item>
+          </dx-responsive-box>
+        </div>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+</div>

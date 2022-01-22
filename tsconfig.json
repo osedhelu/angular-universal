@@ -4,8 +4,53 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@angular/*": [
+        "node_modules/@angular/*"
+      ],
+      "@utils/*": [
+        "src/app/utils/*"
+      ],
+      "@views/*": [
+        "src/app/views/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@store/*": [
+        "src/app/store/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
       "jszip": [
         "node_modules/jszip/dist/jszip.min.js"
+      ],
+      "crypto": [
+        "./node_modules/crypto-browserify"
+      ],
+      "stream": [
+        "./node_modules/stream-browserify"
+      ],
+      "assert": [
+        "./node_modules/assert"
+      ],
+      "http": [
+        "./node_modules/stream-http"
+      ],
+      "https": [
+        "./node_modules/https-browserify"
+      ],
+      "os": [
+        "./node_modules/os-browserify"
+      ],
+      "process": [
+        "./node_modules/process/browser"
       ]
     },
     "outDir": "./dist/out-tsc",
@@ -17,12 +62,19 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "resolveJsonModule": true,
     "lib": [
       "es2018",
       "dom"
     ]
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false
+    // "enableI18nLegacyMessageIdFormat": false,
+    "strictTemplates": true,
   }
 }

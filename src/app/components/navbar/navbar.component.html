@@ -1,0 +1,160 @@
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <div class="navbar-toggle">
+        <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <a class="navbar-brand pl-3" href="#">{{getTitle()}}</a>
+    </div>
+    <button class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!isCollapsed"
+      aria-controls="collapseExample">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
+      <form>
+        <div class="input-group no-border">
+          <input type="text" value="" class="form-control" placeholder="Search...">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <i class="now-ui-icons ui-1_zoom-bold"></i>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ul class="navbar-nav">
+        <li class="nav-item" *ngIf="login">
+          <a class="nav-link" (click)="irCompras()">
+            <i class="now-ui-icons media-2_sound-wave"></i>
+            <p>
+              <span class="d-lg-none d-md-block">Stats</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item" ngbDropdown *ngIf="login">
+          <a class="nav-link" (click)="getBalance()" style="width: 125px;" data-toggle="dropdown" ngbDropdownToggle>
+            <i class="now-ui-icons " style="width: 100%;"> {{userLogin}}</i>
+            <p class="d-lg-none">Billetera</p>
+          </a>
+          <ul class="dropdown-menu-right dropdown-navbar p-0" ngbDropdownMenu>
+            <li class="nav-item" ngbDropdown>
+              <ul class="dropdown-menu-right pt-0 dropdown-navbar" style="
+                  background: #2d2d2d00;
+                  box-shadow: 0px 10px 50px 0px rgba(196, 12, 12, 0);
+                " ngbDropdownMenu>
+                <div id="capa-de-reduccion">
+                  <div id="Group_1">
+                    <div id="Group_2">
+                      <svg class="Intersection_2" viewBox="-1.282 0 2943.171 2950.455">
+                        <path id="Intersection_2"
+                          d="M 1603.108276367188 2698.476806640625 L 88.61995697021484 760.0208129882813 C -55.54817199707031 575.4921875 -22.83098411560059 309.0321044921875 161.6963958740234 164.8627319335938 L 372.711181640625 0 L 2858.888916015625 0 L 2858.888916015625 2255.417724609375 L 2198.26513671875 2771.55322265625 C 2120.766845703125 2832.101318359375 2028.790161132813 2861.449462890625 1937.516845703125 2861.455078125 C 1811.4638671875 2861.462890625 1686.728271484375 2805.505859375 1603.108276367188 2698.476806640625 Z">
+                        </path>
+                      </svg>
+                      <svg class="Intersection_1" viewBox="0 0 2863 2863">
+                        <path id="Intersection_1"
+                          d="M 2736.0478515625 2862.99951171875 L 361.9617919921875 1951.673095703125 C 154.1310729980469 1871.893920898438 20.12044143676758 1683.259033203125 0 1475.787231445313 L 0 1366.811401367188 C 4.841856002807617 1316.94384765625 16.4133358001709 1266.894653320313 35.24119567871094 1217.845825195313 L 502.7287902832031 0 L 2862.99951171875 0 L 2862.99951171875 2862.99951171875 L 2736.0478515625 2862.99951171875 Z">
+                        </path>
+                      </svg>
+                    </div>
+                    <div id="text_ahorro">
+                      <span></span><br /><span class="p-ahorro">A: {{balance?.ahorro| currency:
+                        "USD":"symbol":"1.00"}} USDT</span>
+                      <span></span><br /><span class="p-ahorro">D: {{ balance?.disponible| currency:
+                        "USD":"symbol":"1.00"}} YAZ</span>
+                      <span></span><br /><span class="p-ahorro">R: {{balance?.reservado| currency:
+                        "USD":"symbol":"1.00"}} YAZ</span>
+                    </div>
+                    <div id="text_Disponible">
+                      <span><br /></span><span>{{_web3.balance | currency: "USD":"symbol":"1.00"}} <p style="font-size: 11px;">USDT</p>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-lg-12 d-none d-sm-none d-md-block">
+
+                  <button (click)="exit()" class="btn-recargas btn btn-sm btn-danger">
+                    exit
+                  </button>
+                  <!-- <div *ngIf="submitted && f.name_uniqued.errors">
+                    <div class="text-danger" *ngIf="f.name_uniqued.errors.required">
+                      Por favor, ingresa una usuario personal valida
+                    </div>
+                    <div class="text-danger" *ngIf="f.name_uniqued.errors.pattern">
+                      Este usuario es invalido
+                    </div>
+                  </div> -->
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" *ngIf="!login">
+          <a class="nav-link " (click)="ConexionMetamask()">
+            <i class="pr-2">
+              <svg xmlns="http://www.w2.org/2000/svg" width="20" height="20" viewBox="0 0 212 189">
+                <g fill="none" fill-rule="evenodd">
+                  <polygon fill="#CDBDB2"
+                    points="60.75 173.25 88.313 180.563 88.313 171 90.563 168.75 106.313 168.75 106.313 180 106.313 187.875 89.438 187.875 68.625 178.875" />
+                  <polygon fill="#CDBDB2"
+                    points="105.75 173.25 132.75 180.563 132.75 171 135 168.75 150.75 168.75 150.75 180 150.75 187.875 133.875 187.875 113.063 178.875"
+                    transform="matrix(-1 0 0 1 256.5 0)" />
+                  <polygon fill="#393939"
+                    points="90.563 152.438 88.313 171 91.125 168.75 120.375 168.75 123.75 171 121.5 152.438 117 149.625 94.5 150.188" />
+                  <polygon fill="#F89C35"
+                    points="75.375 27 88.875 58.5 95.063 150.188 117 150.188 123.75 58.5 136.125 27" />
+                  <polygon fill="#F89D35"
+                    points="16.313 96.188 .563 141.75 39.938 139.5 65.25 139.5 65.25 119.813 64.125 79.313 58.5 83.813" />
+                  <polygon fill="#D87C30" points="46.125 101.25 92.25 102.375 87.188 126 65.25 120.375" />
+                  <polygon fill="#EA8D3A" points="46.125 101.813 65.25 119.813 65.25 137.813" />
+                  <polygon fill="#F89D35" points="65.25 120.375 87.75 126 95.063 150.188 90 153 65.25 138.375" />
+                  <polygon fill="#EB8F35" points="65.25 138.375 60.75 173.25 90.563 152.438" />
+                  <polygon fill="#EA8E3A" points="92.25 102.375 95.063 150.188 86.625 125.719" />
+                  <polygon fill="#D87C30" points="39.375 138.938 65.25 138.375 60.75 173.25" />
+                  <polygon fill="#EB8F35" points="12.938 188.438 60.75 173.25 39.375 138.938 .563 141.75" />
+                  <polygon fill="#E8821E" points="88.875 58.5 64.688 78.75 46.125 101.25 92.25 102.938" />
+                  <polygon fill="#DFCEC3"
+                    points="60.75 173.25 90.563 152.438 88.313 170.438 88.313 180.563 68.063 176.625" />
+                  <polygon fill="#DFCEC3"
+                    points="121.5 173.25 150.75 152.438 148.5 170.438 148.5 180.563 128.25 176.625"
+                    transform="matrix(-1 0 0 1 272.25 0)" />
+                  <polygon fill="#393939" points="70.313 112.5 64.125 125.438 86.063 119.813"
+                    transform="matrix(-1 0 0 1 150.188 0)" />
+                  <polygon fill="#E88F35" points="12.375 .563 88.875 58.5 75.938 27" />
+                  <path fill="#8E5A30"
+                    d="M12.3750002,0.562500008 L2.25000003,31.5000005 L7.87500012,65.250001 L3.93750006,67.500001 L9.56250014,72.5625 L5.06250008,76.5000011 L11.25,82.1250012 L7.31250011,85.5000013 L16.3125002,96.7500014 L58.5000009,83.8125012 C79.1250012,67.3125004 89.2500013,58.8750003 88.8750013,58.5000009 C88.5000013,58.1250009 63.0000009,38.8125006 12.3750002,0.562500008 Z" />
+                  <g transform="matrix(-1 0 0 1 211.5 0)">
+                    <polygon fill="#F89D35"
+                      points="16.313 96.188 .563 141.75 39.938 139.5 65.25 139.5 65.25 119.813 64.125 79.313 58.5 83.813" />
+                    <polygon fill="#D87C30" points="46.125 101.25 92.25 102.375 87.188 126 65.25 120.375" />
+                    <polygon fill="#EA8D3A" points="46.125 101.813 65.25 119.813 65.25 137.813" />
+                    <polygon fill="#F89D35" points="65.25 120.375 87.75 126 95.063 150.188 90 153 65.25 138.375" />
+                    <polygon fill="#EB8F35" points="65.25 138.375 60.75 173.25 90 153" />
+                    <polygon fill="#EA8E3A" points="92.25 102.375 95.063 150.188 86.625 125.719" />
+                    <polygon fill="#D87C30" points="39.375 138.938 65.25 138.375 60.75 173.25" />
+                    <polygon fill="#EB8F35" points="12.938 188.438 60.75 173.25 39.375 138.938 .563 141.75" />
+                    <polygon fill="#E8821E" points="88.875 58.5 64.688 78.75 46.125 101.25 92.25 102.938" />
+                    <polygon fill="#393939" points="70.313 112.5 64.125 125.438 86.063 119.813"
+                      transform="matrix(-1 0 0 1 150.188 0)" />
+                    <polygon fill="#E88F35" points="12.375 .563 88.875 58.5 75.938 27" />
+                    <path fill="#8E5A30"
+                      d="M12.3750002,0.562500008 L2.25000003,31.5000005 L7.87500012,65.250001 L3.93750006,67.500001 L9.56250014,72.5625 L5.06250008,76.5000011 L11.25,82.1250012 L7.31250011,85.5000013 L16.3125002,96.7500014 L58.5000009,83.8125012 C79.1250012,67.3125004 89.2500013,58.8750003 88.8750013,58.5000009 C88.5000013,58.1250009 63.0000009,38.8125006 12.3750002,0.562500008 Z" />
+                  </g>
+                </g>
+              </svg>
+
+            </i>
+            <p>
+              <span class="d-lg-none d-md-block">Sign in</span>
+            </p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

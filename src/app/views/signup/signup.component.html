@@ -1,0 +1,138 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">{{Usuario.wallet}}</h5>
+        </div>
+        <div class="card-body">
+          <form action="your-action" (submit)="_onFormSubmit($event)">
+            <dx-form id="form" id="form" [formData]="Usuario" [readOnly]="false" [showColonAfterLabel]="true"
+              [showValidationSummary]="true" validationGroup="customerData">
+              <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
+                <dxi-item dataField="Sponsor" [helpText]="'verify that '+Usuario.Sponsor?.username+' is your sponsor'"
+                  [disabled]="true" itemTemplate="list-item">
+                  <div *dxTemplate="let item of 'list-item'">
+                    {{Usuario.Sponsor?.username}}
+                  </div>
+                </dxi-item>
+                <dxi-item dataField="Username">
+
+                  <dxi-validation-rule type="required" message="Username is required">
+                  </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="FirstName">
+                  <dxi-validation-rule type="required" message="FirstName is required">
+                  </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="LastName">
+                  <dxi-validation-rule type="required" message="LastName is required">
+                  </dxi-validation-rule>
+
+                </dxi-item>
+                <dxi-item dataField="Email">
+                  <dxi-validation-rule type="required" message="Email is required">
+                  </dxi-validation-rule>
+                  <dxi-validation-rule type="email" message="Email is invalid">
+                  </dxi-validation-rule>
+                  <dxi-validation-rule type="async" message="Email is already registered" [reevaluate]="false"
+                    [validationCallback]="asyncValidation">
+
+                  </dxi-validation-rule>
+                </dxi-item>
+
+              </dxi-item>
+              <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
+                <dxi-item dataField="country" itemTemplate="templatecountry">
+                  <div *dxTemplate=" let item of 'templatecountry'">
+                    <dx-select-box [value]="Usuario.country" [dataSource]="Paises" displayExpr="nombre" valueExpr="_id"
+                      [searchMode]="searchModeOption" [searchExpr]="searchExprOption"
+                      [searchTimeout]="searchTimeoutOption" [minSearchLength]="minSearchLengthOption"
+                      (onSelectionChanged)="keyDown($event)" [searchEnabled]="true" fieldTemplate="field">
+                      <div *dxTemplate="let data of 'field'">
+                        <div class="custom-item">
+                          <i [class]="'flag-icon flag-icon-'+Usuario.country?.iso2.toLocaleLowerCase()"></i>
+                          <dx-text-box [value]="Usuario.country?.name" class="product-name"></dx-text-box>
+                          <!-- <i [class]="'flag-icon flag-icon-'+data?.iso2.toLowerCase()"></i> {{ data.name }} -->
+                        </div>
+                      </div>
+                      <div *dxTemplate="let data of 'item'">
+                        <div class="custom-item">
+                          <div class="product-name">
+                            <i [class]="'flag-icon flag-icon-'+data.iso2.toLowerCase()"></i> {{ data.name }}
+                          </div>
+                        </div>
+                      </div>
+                    </dx-select-box>
+                  </div>
+                  <dxi-validation-rule type="required" message="Country is required">
+                  </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="Phone"
+                  [helpText]="'Enter the phone number in '+Usuario.country?.name+' phone format'" [editorOptions]="{
+          mask: '+'+Usuario.country?.phone_code+' (X00) 000-0000',
+          maskRules: phoneRules
+        }">
+                </dxi-item>
+                <dxi-item dataField="Password" [editorOptions]="{ mode: 'password' }">
+                  <dxi-validation-rule type="required" message="Password is required">
+                  </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="password_compare" editorType="dxTextBox" [editorOptions]="{ mode: 'password' }">
+                  <dxo-label text="Confirm Password"> </dxo-label>
+                  <dxi-validation-rule type="required" message="Confirm Password is required">
+                  </dxi-validation-rule>
+                  <dxi-validation-rule type="compare" [comparisonTarget]="passwordComparison"
+                    message="Password and Confirm Password do not match">
+                  </dxi-validation-rule>
+                </dxi-item>
+              </dxi-item>
+              <dxi-item itemType="group" cssClass="second-group" [colCount]="1">
+                <dxi-item itemType="button" horizontalAlignment="center" [buttonOptions]="buttonOptions">
+
+                </dxi-item>
+              </dxi-item>
+            </dx-form>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/bg5.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
+              <h5 class="title">{{Usuario?.FirstName}} {{Usuario.LastName}}</h5>
+            </a>
+            <p class="description">
+              {{Usuario.Username}}
+            </p>
+          </div>
+          <p class="description text-center">
+            <i [class]="'flag-icon flag-icon-'+Usuario.country?.iso2.toLocaleLowerCase()"></i>
+            {{Usuario.country?.nombre}}
+            <br> +{{Usuario.country?.phone_code}} {{Usuario?.Phone}}
+          </p>
+        </div>
+        <hr>
+        <div class="button-container">
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-google-plus-g"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

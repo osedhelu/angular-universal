@@ -1,0 +1,128 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertService, aling, from, status } from '@services/alertService/alert.service';
+import { AuthService } from '@services/auth.service';
+import { TransactionService } from '@services/transaction/transaction.service';
+import { Web3Service } from '@services/web3Service/web3.service';
+import { iPackage, PackagesService } from '@services/PackagesService/packages.service';
+
+@Component({
+    selector: 'app-packages',
+    templateUrl: './packages.component.html',
+    styleUrls: ['./packages.component.scss'],
+})
+export class PackagesComponent implements OnInit {
+    houses: iPackage[];
+    data: any[] = []
+    currentHouse: iPackage;
+    btnComprar: boolean = true
+    popupVisible = false;
+    ADD_TO_FAVORITES = 'buy this pack';
+    REMOVE_FROM_FAVORITES = 'Remove from Favorites';
+    dimencion: number = 660
+    popupFram: boolean = false;
+    screen(width): any {
+        if (width > 700) {
+            this.dimencion = 660
+        }
+        if (width < 500) {
+            this.dimencion = 300
+        }
+        return (width < 700) ? 'sm' : 'lg';
+    }
+    constructor(private _package: PackagesService, private _alert: AlertService, private _web3: Web3Service, private _tran: TransactionService, private _auth: AuthService, private router: Router) {
+        this.screen = this.screen.bind(this)
+    }
+
+
+    ngOnInit() {
+        this._package.get().subscribe((resp: any) => {
+            this.data = resp.data
+            this.houses = resp.data
+
+            this.currentHouse = this.houses[0];
+        })
+        // this._alert.show(from.bottom, aling.right, status.success, 'bue')
+
+    }
+    async showHouse(packageo: iPackage) {
+        try {
+            console.log(packageo)
+            if (packageo.status) {
+                this._alert.show(from.bottom, aling.right, status.info, 'Este paquete ya fue vendido')
+                return
+            }
+            if (!packageo.Favorite) {
+                this.currentHouse = packageo;
+                this.popupVisible = true;
+                this.btnComprar = false
+            } else {
+                this.popupFram = true
+                this.currentHouse = packageo;
+            }
+        } catch (e) {
+            console.log('line: 60', e)
+        }
+
+    }
+
+    async changeFavoriteState(data) {
+        try {
+            if (!!localStorage.getItem('eth-token') && !!localStorage.getItem('user-eth')) {
+                await this._auth.validateToken()
+                this.btnComprar = true
+                const address = await this._web3.getAccount()
+                const { web3 } = this._web3;
+                const contract = await this._web3.getContract()
+                const decimals = await contract.methods.decimals().call();
+                let priceDecimal = this.currentHouse.Price + ''
+                for (let i = 0; i < decimals; i++) {
+                    priceDecimal += '0'
+                }
+                const amount = web3.utils.toBN(priceDecimal)
+                let { events, logsBloom, status, ...block } = await contract.methods.transfer('0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', amount).send({
+                    from: address, gasLimit: 60000,
+                    value: 0
+                })
+                const unblock = await web3.eth.getBlock(block.blockNumber)
+                console.log(unblock)
+                this.currentHouse.Favorite = !this.currentHouse.Favorite
+                const e = {
+                    ...block,
+                    timestamp: unblock.timestamp,
+                    priceDecimal,
+                    decimals
+                }
+                this.popupVisible = false
+                this._tran.toPayPackage(e).subscribe((resp: any) => {
+                    this.router.navigate(['/invoice'], { queryParams: resp.data });
+                })
+
+            } else {
+                this.popupVisible = false
+                // notify('inicia seccion primero')
+                this._alert.show(from.bottom, aling.right, status.warning, 'debes iniciar seccion primero')
+                this._web3.connect()
+            }
+            // 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1
+            // const favoriteState = !this.currentHouse.Favorite;
+            // const message = `This item has been ${favoriteState ? 'added to' : 'removed from'
+            // } the Favorites list!`;
+            // this.currentHouse.Favorite = favoriteState;
+            // 
+            // notify({
+            // message,
+            // width: 450,
+            // },
+            // favoriteState ? 'success' : 'error',
+            // 2000);
+
+        } catch (err) {
+            console.log('holaaaa', err)
+            if (err.code === 4001) {
+                this.popupVisible = false
+            }
+        }
+    }
+
+}
