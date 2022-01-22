@@ -3,25 +3,39 @@
  */
 import '@angular/localize/init';
 import 'zone.js/dist/zone-node';
-
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
-
 import { existsSync } from 'fs';
-
-
-
-
+import { Buffer } from 'buffer';
+import domino from 'domino';
+import 'localstorage-polyfill'
+declare const window: any
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/yafuz/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
-  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  const win = domino.createWindow(indexHtml);
+  (global as any).window = win;
+  (global as any).document = win.document;
+  (global as any).navigator = win.navigator;
+  (global as any).Buffer = Buffer;
+  (global as any).localStorage = localStorage;
+  (window as any).Buffer = window.Buffer || Buffer;
+  (window as any).matchMedia = window.matchMedia || function () {
+    return {
+      matches: false,
+      addListener: function () { },
+      removeListener: function () { }
+    };
+  };
+  // / (global as any).local = win.navigator; Our Universal express-engine
+  // (found @
+  // https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
