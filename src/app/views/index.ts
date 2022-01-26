@@ -35,6 +35,10 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 loadChildren: () => import('@views/farms/farms.module').then((m) => m.FarmsModule)
+            },
+            {
+                path: '',
+                loadChildren: () => import('@views/withdraw/withdraw.module').then((m) => m.WithdrawModule)
             }
         ]
     }

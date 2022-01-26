@@ -17,7 +17,7 @@ $light-black:                #444    !default;
 
 $black-bg:                   rgba(30,30,30,.97) !default;
 
-$black-color:                #2c2c2c !default;
+$black-color:                #E8540D !default;
 $black-hr:                   #444444 !default;
 
 $hr-line:                    rgba(0,0,0, .1) !default;
@@ -68,7 +68,7 @@ $warning-states-color:       lighten($warning-color, 6%) !default;
 $warning-color-opacity:      rgba(255, 178, 54, .3) !default;
 $warning-color-alert:        rgba(255, 178, 54, .8) !default;
 
-$danger-color:               #FF3636 !default;
+$danger-color:               #482680 !default;
 $danger-states-color:        lighten($danger-color, 6%) !default;
 $danger-color-opacity:       rgba(255, 54, 54, .3) !default;
 $danger-color-alert:         rgba(255, 54, 54, .8) !default;
@@ -101,7 +101,7 @@ $padding-input-horizontal:      19px !default;
 $padding-btn-vertical:         11px !default;
 $padding-btn-horizontal:       22px !default;
 
-$padding-base-vertical:        .5rem !default;
+$padding-base-vertical:        1.5rem !default;
 $padding-base-horizontal:      .7rem !default;
 
 $padding-round-horizontal:     23px !default;

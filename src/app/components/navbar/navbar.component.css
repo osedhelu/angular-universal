@@ -44,7 +44,7 @@
   overflow: visible;
 }
 #Intersection_2 {
-  fill: rgba(255, 0, 0, 1);
+  fill: #cfad42;
 }
 .Intersection_2 {
   overflow: visible;
@@ -56,7 +56,7 @@
   transform: matrix(1, 0, 0, 1, 0, 0);
 }
 #Intersection_1 {
-  fill: rgba(87, 16, 16, 1);
+  fill: rgb(214 77 12);
 }
 .Intersection_1 {
   overflow: visible;

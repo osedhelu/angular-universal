@@ -1,14 +1,31 @@
 <div class="panel-header panel-header-lg">
-  <canvas baseChart id="bigDashboardChart" [datasets]="lineBigDashboardChartData" [labels]="lineBigDashboardChartLabels"
-    [colors]="lineBigDashboardChartColors" [options]="lineBigDashboardChartOptions"
-    [chartType]="lineBigDashboardChartType" (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)"></canvas>
+  <dx-chart id="chartOs"  palette="violet" [dataSource]="architecturesInfo">
+    <dxi-series valueField="pack1" name="pack1"></dxi-series>
+    <dxi-series valueField="pack2" name="pack2"></dxi-series>
+    <dxi-series valueField="pack3" name="pack3"></dxi-series>
+    <dxi-series valueField="pack4" name="pack4"></dxi-series>
+    <dxo-common-series-settings #seriesSettings argumentField="mes" [type]="types[0]">
+    </dxo-common-series-settings>
+    <dxo-margin [bottom]="20"></dxo-margin>
+    <dxo-common-axis-settings>
+      <dxo-grid [visible]="false"></dxo-grid>
+    </dxo-common-axis-settings>
+    <dxo-legend verticalAlignment="top" horizontalAlignment="right">
+    </dxo-legend>
+    <dxo-argument-axis [valueMarginsEnabled]="false" discreteAxisDivisionMode="crossLabels">
+      <dxo-label>
+        <dxo-format type="decimal"></dxo-format>
+      </dxo-label>
+    </dxo-argument-axis>
+    <dxo-export [enabled]="false"></dxo-export>
+    <dxo-tooltip [enabled]="true"></dxo-tooltip>
+  </dx-chart>
 </div>
 
 <div class="main-content">
   <div class="row">
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-6" *ngFor="let country of countries">
       <div class="card card-chart">
         <div class="card-header">
           <h5 class="card-category">Global Sales</h5>
@@ -27,10 +44,27 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="chart-area">
-            <canvas baseChart id="lineChartExample" [datasets]="lineChartData" [labels]="lineChartLabels"
-              [colors]="lineChartColors" [options]="lineChartOptions" [chartType]="lineChartType"
-              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          <div class="chart-area pies-container">
+            <dx-pie-chart class="pie" sizeGroup="piesGroup" [dataSource]="service.getData(country)" [animation]="false"
+              resolveLabelOverlapping="shift" type="doughnut" centerTemplate="centerTemplate" [innerRadius]="0.65">
+              <dxi-series argumentField="commodity" valueField="total">
+                <dxo-label backgroundColor="none" [visible]="true" format="fixedPoint" [customizeText]="customizeLabel">
+                  <dxo-connector [visible]="true"></dxo-connector>
+                </dxo-label>
+              </dxi-series>
+              <dxo-legend [visible]="false"> </dxo-legend>
+              <svg *dxTemplate="let pieChart of 'centerTemplate'">
+                <circle cx="100" cy="100" [attr.r]="pieChart.getInnerRadius() - 6" fill="#eee"></circle>
+                <text x="64" y="84" width="60" style="font-size: 14px" height="40"> {{getTOtal()}} USDT</text>
+                <text text-anchor="middle" style="font-size: 18px" x="100" y="120" fill="#494949">
+                  <tspan x="100">{{ country }}</tspan>
+                  <!-- display: inline -->
+                  <tspan x="100" dy="20px" style="font-weight: 600">{{
+                    calculateTotal(pieChart)
+                    }}</tspan>
+                </text>
+              </svg>
+            </dx-pie-chart>
           </div>
         </div>
         <div class="card-footer">
@@ -40,40 +74,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">2018 Sales</h5>
-          <h4 class="card-title">All products</h4>
-          <div ngbDropdown>
-            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-              ngbDropdownToggle>
-              <i class="now-ui-icons loader_gear"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu-right">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item text-danger" href="#">Remove Data</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
-            <canvas baseChart id="lineChartExampleWithNumbersAndGrid" [datasets]="lineChartWithNumbersAndGridData"
-              [labels]="lineChartWithNumbersAndGridLabels" [colors]="lineChartWithNumbersAndGridColors"
-              [options]="lineChartWithNumbersAndGridOptions" [chartType]="lineChartWithNumbersAndGridType"
-              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
@@ -82,10 +83,10 @@
         </div>
         <div class="card-body">
           <div class="chart-area">
-            <canvas baseChart id="barChartSimpleGradientsNumbers" [datasets]="lineChartGradientsNumbersData"
+            <!-- <canvas baseChart id="barChartSimpleGradientsNumbers" [datasets]="lineChartGradientsNumbersData"
               [labels]="lineChartGradientsNumbersLabels" [colors]="lineChartGradientsNumbersColors"
               [options]="lineChartGradientsNumbersOptions" [chartType]="lineChartGradientsNumbersType"
-              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas> -->
           </div>
         </div>
         <div class="card-footer">

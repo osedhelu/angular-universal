@@ -1,0 +1,67 @@
+::ng-deep .options {
+  padding: 20px;
+  background-color: rgba(223, 35, 35, 0.884);
+  margin-top: 20px;
+}
+::ng-deep #chartOs {
+    height: 290px;
+  // max-width: 900px;
+  margin: auto;
+
+}
+::ng-deep .option {
+  margin-top: 10px;
+}
+
+::ng-deep .caption {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+::ng-deep .option > span {
+  margin-right: 10px;
+}
+
+::ng-deep .option > .dx-widget {
+  display: inline-block;
+  vertical-align: middle;
+}
+::ng-deep .dxc-val-elements > text {
+    fill: black !important;
+}
+
+::ng-deep .dxc-arg-elements > text {
+    fill: black !important;
+}
+::ng-deep .dxc-item > g > text {
+    fill: black !important;
+}
+::ng-deep .pies-container {
+  margin: auto;
+  width: 800px;
+}
+
+::ng-deep .pies-container > .pie {
+  width: 340px;
+  height: 300px;
+  margin-top: -50px;
+  float: left;
+}
+
+::ng-deep .long-title h3 {
+  font-weight: 200;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.card-chart {
+  .chart-area {
+    height: 190px;
+    width: calc(100% + 30px);
+    margin-left: -21px;
+    margin-right: -15px;
+  }
+}
+.panel-header-lg {
+    height: 390px;
+}

@@ -10,6 +10,7 @@ import { DxTemplateModule } from 'devextreme-angular/core';
 import { CommonModule } from '@angular/common';
 import { DxScrollViewModule } from 'devextreme-angular/ui/scroll-view';
 import { DxResponsiveBoxModule } from 'devextreme-angular/ui/responsive-box';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 
 const routes: Routes = [
     {
@@ -27,6 +28,7 @@ const routes: Routes = [
         DxPopupModule,
         DxTemplateModule,
         DxScrollViewModule,
+        DxDataGridModule,
         RouterModule.forChild(routes),
     ],
 

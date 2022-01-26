@@ -1,0 +1,57 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body all-icons">
+          <dx-scroll-view width="100%">
+            <div id='page'>
+              <dx-responsive-box id="responsiveBox" singleColumnScreen="sm" [screenByWidth]="screen">
+                <dxi-row [ratio]="1"></dxi-row>
+                <dxi-row [ratio]="1" screen="xs"></dxi-row>
+                <dxi-row [ratio]="1" screen="lg"></dxi-row>
+                <dxi-row [ratio]="1"></dxi-row>
+
+                <dxi-col [ratio]="1" screen="lg"></dxi-col>
+                <dxi-col [ratio]="1"></dxi-col>
+
+                <dxi-item>
+                  <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
+                  <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+                  <div class="large-text">ass</div>
+                  <div class="opacity"> name
+                    <br> <b>receives: </b> pt
+                    <br> <b>commission: </b> prive
+                  </div>
+                  <dx-button [disabled]="btnComprar" class="favorites" [text]="
+            currentHouse?.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES
+          " icon="favorites" [height]="44">
+                  </dx-button>
+                </dxi-item>
+                <dxi-item>
+                  <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
+                  <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
+                  <div class="images">
+                    <img src="{{ currentHouse?.img }}" />
+                  </div>
+                </dxi-item>
+                <dxi-item>
+                  <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
+                  <dxi-location [row]="2" [col]="0" screen="sm"></dxi-location>
+                  <div class="images">
+                    <img src="{{ currentHouse?.img.replace('.jpg', 'b.jpg') }}" />
+                  </div>
+                </dxi-item>
+                <dxi-item>
+                  <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
+                  <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+                  <div>{{ currentHouse.Features }}</div>
+                </dxi-item>
+              </dx-responsive-box>
+            </div>
+          </dx-scroll-view>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

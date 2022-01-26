@@ -8,6 +8,7 @@ import { AuthGuard } from "./guard/auth.guard"
 import { TransactionService } from "./transaction/transaction.service"
 import { MetamaskGuard } from "./guard/authMetamask.guard"
 import { SocketService } from "./SocketService/socket.service"
+import { FarmsService } from "./FarmsService/farms.service"
 
 export const providers = [
     Web3Service,
@@ -19,5 +20,6 @@ export const providers = [
     AuthGuard,
     TransactionService,
     MetamaskGuard,
-    SocketService
+    SocketService,
+    FarmsService
 ]

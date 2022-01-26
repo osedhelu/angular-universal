@@ -12,6 +12,7 @@ import { existsSync } from 'fs';
 import { Buffer } from 'buffer';
 import domino from 'domino';
 import 'localstorage-polyfill'
+require('dotenv').config()
 declare const window: any
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -25,7 +26,7 @@ export function app(): express.Express {
   (global as any).navigator = win.navigator;
   (global as any).Buffer = Buffer;
   (global as any).localStorage = localStorage;
-  (window as any).Buffer = window.Buffer || Buffer;
+  // (window as any).Buffer = window.Buffer || Buffer;
   (window as any).matchMedia = window.matchMedia || function () {
     return {
       matches: false,

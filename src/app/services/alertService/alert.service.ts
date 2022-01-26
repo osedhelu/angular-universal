@@ -26,8 +26,12 @@ export interface iAlert {
 export class AlertService {
   constructor(private toastr: ToastrService) { }
   show(from: from, align: aling, status: status, mesagge: string) {
-    this.toastr[status](`<span class="now-ui-icons yafuz-${status}"></span> Welcome to <b>Yafuz</b> - ${mesagge}.`, '', {
-      timeOut: 8000,
+    this.toastr[status](`
+<div class="container p-0 m-0">
+  <p class="text-center"> <i class="now-ui-icons yafuz-${status}"></i> <h3>${mesagge}</h3></p>
+</div>
+    `, '', {
+      timeOut: 10000,
       closeButton: true,
       enableHtml: true,
       toastClass: `alert alert-${status} alert-with-icon`,

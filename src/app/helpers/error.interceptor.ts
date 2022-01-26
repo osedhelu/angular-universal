@@ -25,7 +25,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               if (error.error.code === 339) {
                 this._alert.show(from.bottom, aling.right, status.error, 'debe de registrarte')
                 this.router.navigate(['/signup/nuevo'])
-
               }
             }
             console.log("ERROR 401 UNAUTHORIZED") // in case of an error response the error message is displayed

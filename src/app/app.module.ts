@@ -9,7 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'packages',
     pathMatch: 'full',
   },
   { path: '404', component: PageNotFoundComponent },
@@ -20,7 +20,7 @@ const appRoutes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'dashboard',
+    redirectTo: '404',
   },
 ]
 @NgModule({

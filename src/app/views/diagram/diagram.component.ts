@@ -20,21 +20,24 @@ export class DiagramComponent implements OnInit {
 
   popupVisible = false;
 
+  diagramViction: boolean = false
   constructor(private _UserService: UsersService) {
-    this.employees = employees;
-    this.dataSource = new ArrayStore({
-      key: 'ID',
-      data: employees
-    });
+
   }
   ngOnInit() {
     // this._alert.show()
-    this._UserService.miRama().subscribe(resp => {
-      console.log(resp)
+    this._UserService.miRama().subscribe((resp: any) => {
+      console.log('hhhhhhhhhhhhhhhhhhhhhh', resp)
+      this.employees = resp;
+      this.dataSource = new ArrayStore({
+        key: '_id',
+        data: resp
+      });
+      this.diagramViction = true
     })
   }
   itemTypeExpr(obj) {
-    return `employee${obj.ID}`;
+    return `user${obj._id}`;
   }
 
   showInfo(employee) {

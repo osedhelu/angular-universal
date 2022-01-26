@@ -25,6 +25,7 @@ export class iPackage {
   dias: Date
   commission: number
   delivered: number
+  _id?: string
 }
 
 

@@ -11,7 +11,7 @@ const routes: Routes = [
     {
         path: 'diagram',
         component: DiagramComponent,
-        // canActivate: [AuthGuard, MetamaskGuard],
+        canActivate: [AuthGuard, MetamaskGuard],
     }
 ];
 @NgModule({

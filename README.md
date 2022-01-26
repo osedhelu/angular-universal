@@ -28,5 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## debes ponerlo en './node_modules/swarm-js/node_modules/got/index.js'
 
-const fs = require('fs')
-let pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
+const fs = require('fs');
+let pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));

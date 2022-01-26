@@ -43,3 +43,52 @@
 ::ng-deep .dx-theme-material .dx-selectbox-container .product-name {
   padding-left: 58px;
 }
+div.clock div.date {
+    color: #595959;
+    font-size: 14px;
+    margin: 8px 0
+}
+div.clock div.time {
+    font-size: 22px;
+    font-weight: 200
+}
+div.clock div.time span {
+    border-radius: 5px;
+    padding: 1px 3px 3px 2px;
+    color: #fff;
+    margin: 0 1px;
+    background: #222;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#555), to(#000));
+    background: -webkit-linear-gradient(top, #555, #000);
+    background: -moz-linear-gradient(top, #555, #000);
+    background: -ms-linear-gradient(top, #555, #000);
+    background: -o-linear-gradient(top, #555, #000)
+}
+div.clock div.time span:nth-child(3) {
+    color: #333;
+    background: #ddd;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#ccc));
+    background: -webkit-linear-gradient(top, #eee, #ccc);
+    background: -moz-linear-gradient(top, #eee, #ccc);
+    background: -ms-linear-gradient(top, #eee, #ccc);
+    background: -o-linear-gradient(top, #eee, #ccc)
+}
+div.clock div.time strong {
+    font-weight: normal;
+    font-size: 18px;
+    margin-left: 3px;
+    color: #666
+}
+div.clock.big {
+    text-align: center;
+    margin: 50px 0 20px 0
+}
+div.clock.big h2 {
+    margin: 20px 0;
+    font-size: 32px
+}
+div.clock.big h2 .headline {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 75%
+}

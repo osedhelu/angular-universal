@@ -3,14 +3,87 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">
-          <h5 class="title">100 hola</h5>
-          <p class="category">
-            haciendo pruebas
-            <a href="https://nucleoapp.com/?ref=1712">NucleoApp</a>
-          </p>
+        <div  class="card-header">
+
         </div>
         <div class="card-body all-icons">
+          <dx-accordion #accordion [dataSource]="companies" [collapsible]="false" [multiple]="false"
+            [animationDuration]="300" [selectedItems]="[companies[0]]">
+            <div *dxTemplate="let company of 'title'">
+              <h4>{{ company?.wallet }} - PACK {{company.package?.ID}} {{company.package?.Price | currency:
+                "USD":"symbol":"1.00"}} </h4>
+
+            </div>
+            <div *dxTemplate="let company of 'item'">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">User</th>
+                    <th scope="col" *ngIf="company.typeSponsor">Referred Type</th>
+                    <th scope="col" *ngIf="company.iivComision"> Commission Value
+                    <th scope="col" *ngIf="company.iiCinicial">Initial Payment </th>
+                    <th scope="col" *ngIf="company.iiDiluida"> diluted</th>
+                    <th scope="col" *ngIf="!company.typeSponsor"> My NFT's</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{company.package.user?.username}} <i
+                        [class]="'flag-icon flag-icon-'+company.package.user.country?.iso2.toLocaleLowerCase()"></i>
+                    </td>
+                    <td *ngIf="company.typeSponsor">
+                      {{company.typeSponsor}}
+                    </td>
+                    <td *ngIf="company.iivComision">
+                      {{company.iivComision | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+                    <td *ngIf="company.iiCinicial">
+                      {{company.iiCinicial | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+                    <td *ngIf="company.iiDiluida">
+                      {{company.iiDiluida | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+
+                    <td *ngIf="!company.typeSponsor">
+                      {{company?.package.Price | currency:
+                      "USD":"symbol":"1.00"}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="!!company.bookDaily">
+                <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" keyExpr="_id" [showBorders]="true">
+                  <dxi-column caption="Dia" cellTemplate="cellTemplate">
+                    <div *dxTemplate="let info of 'cellTemplate'">
+                      daily {{info.row.data?.position}}
+                    </div>
+                  </dxi-column>
+                  <dxi-column caption="debito" cellTemplate="item">
+                    <div *dxTemplate="let item of 'item'">
+                      {{item.row.data.transaction?.debito | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </div>
+
+                  </dxi-column>
+                  <dxi-column caption="Detail" cellTemplate="detail">
+                    <div *dxTemplate="let item of 'detail'">
+                      {{item.row.data?.Observacion }}
+                    </div>
+                  </dxi-column>
+
+                  <!-- <div *dxTemplate="let data of 'PatroTemplate'">
+                    {{data.transaction?.debito | currency:
+                    "USD":"symbol":"1.00"}}
+                  </div> -->
+                </dx-data-grid>
+              </div>
+            </div>
+          </dx-accordion>
+
 
         </div>
       </div>

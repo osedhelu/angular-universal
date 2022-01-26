@@ -12,6 +12,7 @@ const { URL, URL_SOCKET } = environment;
 export class SocketService {
   private socket: Socket;
   constructor(private _alert: AlertService, private router: Router) {
+    console.log('.........................',URL_SOCKET)
     if (!!localStorage.getItem('token')) {
       this.socket = io(URL_SOCKET, {
         withCredentials: true,

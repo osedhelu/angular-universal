@@ -4,36 +4,43 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body">
-          <dx-diagram id="diagram" customShapeTemplate="customShapeTemplate"  autoZoomMode="fitWidth" [simpleView]="true" [readOnly]="true">
-            <dxi-custom-shape *ngFor="let emp of employees" [type]="'employee' + emp.ID" baseType="rectangle"
+        <div class="card-body" *ngIf="diagramViction">
+          <dx-diagram id="diagram" customShapeTemplate="customShapeTemplate" autoZoomMode="fitWidth" [simpleView]="true"
+            [readOnly]="true">
+            <dxi-custom-shape *ngFor="let emp of employees" [type]="'user' + emp._id" baseType="rectangle"
               [defaultWidth]="1.5" [defaultHeight]="1" [allowEditText]="false" [allowResize]="false">
             </dxi-custom-shape>
             <svg *dxTemplate="let item of 'customShapeTemplate'" class="template">
               <text class="template-name" x="50%" y="20%">
-                {{ item.dataItem.Full_Name }}
+                {{ item.dataItem.username }}
               </text>
               <text class="template-title" x="50%" y="45%">
-                {{ item.dataItem.Title }}
+                {{item.dataItem.country.name}}
               </text>
-              <text class="template-button" x="50%" y="85%" (click)="showInfo(item.dataItem)">
+              <foreignObject x="81%" y="30%" width="30" height="24">
+                <i [class]="'template-title flag-icon flag-icon-'+item.dataItem.country?.iso2.toLocaleLowerCase()"
+                  xmlns="http://www.w3.org/1999/xhtml">
+
+                </i>
+              </foreignObject>
+              <text class="template-button" x="50%" y="85%" style="cursor: pointer;" (click)="showInfo(item.dataItem)">
                 Show Details
               </text>
             </svg>
-            <dxo-nodes [dataSource]="dataSource" keyExpr="ID" [typeExpr]="itemTypeExpr" parentKeyExpr="Head_ID">
+            <dxo-nodes [dataSource]="dataSource" keyExpr="_id" [typeExpr]="itemTypeExpr" parentKeyExpr="patrocinador">
               <dxo-auto-layout type="tree"></dxo-auto-layout>
             </dxo-nodes>
           </dx-diagram>
           <dx-popup [width]="300" [height]="280" [showTitle]="true" title="Information" [dragEnabled]="false"
             [closeOnOutsideClick]="true" [(visible)]="popupVisible">
             <div *dxTemplate="let data of 'content'">
-              <p>Full Name: <b>{{ currentEmployee.Full_Name }}</b></p>
-              <p>Title: <b>{{ currentEmployee.Title }}</b></p>
-              <p>City: <b>{{ currentEmployee.City }}</b></p>
-              <p>State: <b>{{ currentEmployee.State }}</b></p>
-              <p>Email: <b>{{ currentEmployee.Email }}</b></p>
-              <p>Skype: <b>{{ currentEmployee.Skype }}</b></p>
-              <p>Mobile Phone: <b>{{ currentEmployee.Mobile_Phone }}</b></p>
+              <p>Full Name: <b>{{ currentEmployee.nombre }} {{currentEmployee.apellidos}}</b></p>
+              <p>Country: <b>{{ currentEmployee.country.name }} <i
+                    [class]="'flag-icon flag-icon-'+currentEmployee.country?.iso2.toLocaleLowerCase()"></i>
+                </b></p>
+              <p>Email: <b>{{ currentEmployee.email }}</b></p>
+              <p>Phone: <b> + {{currentEmployee.country.phone_code}} {{ currentEmployee.celular }}</b></p>
+              <p>My ID: <b> {{currentEmployee._id}}</b></p>
             </div>
           </dx-popup>
 

@@ -5,6 +5,7 @@ import { AuthService } from '@services/auth.service';
 import { TransactionService } from '@services/transaction/transaction.service';
 import { Web3Service } from '@services/web3Service/web3.service';
 import { iPackage, PackagesService } from '@services/PackagesService/packages.service';
+import { FarmsService } from '@services/FarmsService/farms.service'
 
 @Component({
     selector: 'app-packages',
@@ -21,6 +22,7 @@ export class PackagesComponent implements OnInit {
     REMOVE_FROM_FAVORITES = 'Remove from Favorites';
     dimencion: number = 660
     popupFram: boolean = false;
+    ipackageDetail: any = {}
     screen(width): any {
         if (width > 700) {
             this.dimencion = 660
@@ -30,7 +32,9 @@ export class PackagesComponent implements OnInit {
         }
         return (width < 700) ? 'sm' : 'lg';
     }
-    constructor(private _package: PackagesService, private _alert: AlertService, private _web3: Web3Service, private _tran: TransactionService, private _auth: AuthService, private router: Router) {
+    constructor(private _package: PackagesService,
+        private _venta: FarmsService,
+        private _alert: AlertService, private _web3: Web3Service, private _tran: TransactionService, private _auth: AuthService, private router: Router) {
         this.screen = this.screen.bind(this)
     }
 
@@ -57,8 +61,12 @@ export class PackagesComponent implements OnInit {
                 this.popupVisible = true;
                 this.btnComprar = false
             } else {
-                this.popupFram = true
                 this.currentHouse = packageo;
+                const infoVenta = await this._venta.getVentasToPackage(packageo?._id)
+                console.log('info Venta ', infoVenta)
+                this.ipackageDetail = infoVenta.data
+                ////
+                this.popupFram = true
             }
         } catch (e) {
             console.log('line: 60', e)
@@ -101,7 +109,7 @@ export class PackagesComponent implements OnInit {
             } else {
                 this.popupVisible = false
                 // notify('inicia seccion primero')
-                this._alert.show(from.bottom, aling.right, status.warning, 'debes iniciar seccion primero')
+                this._alert.show(from.top, aling.center, status.info, 'Connect your metamask wallet')
                 this._web3.connect()
             }
             // 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1

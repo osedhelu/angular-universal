@@ -203,7 +203,9 @@ export class NavbarComponent implements OnInit {
       localStorage.setItem('eth-token', token)
 
       this._auth.ethToken().subscribe((resp: any) => {
+        console.log(resp)
         localStorage.setItem('token', resp.access_token)
+        localStorage.setItem('_id', resp._id)
         localStorage.setItem('user-eth', userLogin)
         this.login = true
         this.userLogin = userLogin
@@ -227,8 +229,6 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('user-eth')
     localStorage.removeItem('token')
     this.login = false
-
-    window.location.href = '/'
     this._socket.disconnect()
     await this._auth.deleteSeccion(await this._web3.getAccount())
     this._web3.socketTransaction.unsubscribe(function (error, success) {
@@ -251,6 +251,23 @@ export class NavbarComponent implements OnInit {
 
   }
   irCompras() {
-    this.router.navigate(['compras'])
+    console.log('farms')
+    this.router.navigate(['farms'])
+  }
+  getUrlAfiliado(event: any): void {
+    const isIEorEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
+    const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+    if (isIEorEdge) {
+      const data = event.clipboardData || window['clipboardData'];
+      const clipboardData = data.getData('text');
+      console.log(clipboardData);
+    } else {
+      const host = window.location.origin;
+      navigator['clipboard'].writeText(`${host}/#/signup/${localStorage.getItem('_id')}`).then((data) => {
+        console.log(window.location)
+        this._alert.show(from.bottom, aling.right, status.info, 'link de referido')
+      });
+    }
   }
 }

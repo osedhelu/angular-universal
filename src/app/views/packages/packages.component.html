@@ -121,10 +121,51 @@
             <dxi-item>
               <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
               <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+              <table class="table table-striped" *ngIf="!!ipackageDetail">
+                <thead>
+                  <tr>
+                    <th scope="col">User</th>
+                    <th scope="col" *ngIf="ipackageDetail?.typeSponsor">Referred Type</th>
+                    <th scope="col" *ngIf="ipackageDetail?.iivComision"> Commission Value
+                    <th scope="col" *ngIf="ipackageDetail?.iiCinicial">Initial Payment </th>
+                    <th scope="col" *ngIf="ipackageDetail?.iiDiluida"> diluted</th>
+                    <th scope="col" *ngIf="!ipackageDetail?.typeSponsor"> My NFT's</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{ipackageDetail.package.user?.username}} <i
+                        [class]="'flag-icon flag-icon-'+ipackageDetail.package.user.country?.iso2.toLocaleLowerCase()"></i>
+                    </td>
+                    <td *ngIf="ipackageDetail.typeSponsor">
+                      {{ipackageDetail.typeSponsor}}
+                    </td>
+                    <td *ngIf="ipackageDetail.iivComision">
+                      {{ipackageDetail.iivComision | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+                    <td *ngIf="ipackageDetail.iiCinicial">
+                      {{ipackageDetail.iiCinicial | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+                    <td *ngIf="ipackageDetail.iiDiluida">
+                      {{ipackageDetail.iiDiluida | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </td>
+
+                    <td *ngIf="!ipackageDetail.typeSponsor">
+                      {{ipackageDetail?.package.Price | currency:
+                      "USD":"symbol":"1.00"}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </dxi-item>
             <dxi-item>
               <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
               <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
+
             </dxi-item>
             <dxi-item>
               <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
@@ -133,6 +174,40 @@
             <dxi-item>
               <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
               <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
+              <div *ngIf="ipackageDetail.bookDaily">
+                <dx-data-grid id="gridContainer" [dataSource]="ipackageDetail.bookDaily" keyExpr="_id"
+                  [showBorders]="true">
+                  <dxi-column caption="Dia" cellTemplate="cellTemplate">
+                    <div *dxTemplate="let info of 'cellTemplate'">
+                      daily {{info.row.data?.position}}
+                    </div>
+                  </dxi-column>
+                  <dxi-column caption="debito" cellTemplate="item">
+                    <div *dxTemplate="let item of 'item'">
+                      {{item.row.data.transaction?.debito | currency:
+                      "USD":"symbol":"1.00"}} yaz
+                    </div>
+
+                  </dxi-column>
+                  <dxi-column caption="Detail" cellTemplate="detail">
+                    <div *dxTemplate="let item of 'detail'">
+                      {{item.row.data?.Observacion }}
+                    </div>
+                  </dxi-column>
+                  <dxi-column caption="time" cellTemplate="detail">
+                    <div class="clock">
+                      <div class="time"><span class="hour">19</span>:<span class="minute">48</span>:<span
+                          class="second">03</span>
+                      </div>
+                    </div>
+                  </dxi-column>
+
+                  <!-- <div *dxTemplate="let data of 'PatroTemplate'">
+                    {{data.transaction?.debito | currency:
+                    "USD":"symbol":"1.00"}}
+                  </div> -->
+                </dx-data-grid>
+              </div>
             </dxi-item>
           </dx-responsive-box>
         </div>

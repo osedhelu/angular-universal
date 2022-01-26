@@ -81,6 +81,7 @@ export class SignupComponent implements OnInit {
     password_compare: ''
   }
   phoneRules: any = {
+    N: /^999/,
     X: /[02-9]/,
   }
   phonePattern: any = /^[02-9]\d{9}$/;

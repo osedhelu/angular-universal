@@ -4,23 +4,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@services/guard/auth.guard';
 import { MetamaskGuard } from '@services/guard/authMetamask.guard';
 import { DashboardComponent } from './dashboard.component';
-import { ChartsModule } from 'ng2-charts';
-import 'chart.js';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { DxChartModule, DxPieChartModule, DxSelectBoxModule } from 'devextreme-angular';
+import { DashboardService } from './dashboard.service';
+import { CommonModule } from '@angular/common';
 const routes: Routes = [
     {
         path: '',
         component: DashboardComponent,
-        // canActivate: [AuthGuard, MetamaskGuard],
+        canActivate: [AuthGuard, MetamaskGuard],
     }
 ];
 @NgModule({
     declarations: [DashboardComponent],
     imports: [
-        ChartsModule,
         NgbDropdownModule,
         RouterModule.forChild(routes),
+        DxChartModule,
+        DxSelectBoxModule,
+        DxPieChartModule,
+        CommonModule
+
     ],
+    providers: [DashboardService]
 
 })
 
