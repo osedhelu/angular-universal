@@ -40,13 +40,17 @@ export class PackagesComponent implements OnInit {
 
 
     ngOnInit() {
+        // this._alert.show(from.bottom, aling.right, status.success, 'bue')
+
+        this.getPack()
+    }
+    getPack() {
         this._package.get().subscribe((resp: any) => {
             this.data = resp.data
             this.houses = resp.data
 
             this.currentHouse = this.houses[0];
         })
-        // this._alert.show(from.bottom, aling.right, status.success, 'bue')
 
     }
     async showHouse(packageo: iPackage) {
@@ -83,29 +87,21 @@ export class PackagesComponent implements OnInit {
                 const { web3 } = this._web3;
                 const contract = await this._web3.getContract()
                 const decimals = await contract.methods.decimals().call();
-                let priceDecimal = this.currentHouse.Price + ''
-                for (let i = 0; i < decimals; i++) {
-                    priceDecimal += '0'
-                }
+
+                const price = this.currentHouse.Price.toString()
+                let priceDecimal = price.padEnd(Number(decimals) + price.length, '0')
+
                 const amount = web3.utils.toBN(priceDecimal)
-                let { events, logsBloom, status, ...block } = await contract.methods.transfer('0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', amount).send({
+                let data = await contract.methods.transfer('0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', amount).send({
                     from: address, gasLimit: 60000,
                     value: 0
                 })
-                const unblock = await web3.eth.getBlock(block.blockNumber)
-                console.log(unblock)
                 this.currentHouse.Favorite = !this.currentHouse.Favorite
-                const e = {
-                    ...block,
-                    timestamp: unblock.timestamp,
-                    priceDecimal,
-                    decimals
-                }
-                this.popupVisible = false
-                this._tran.toPayPackage(e).subscribe((resp: any) => {
-                    this.router.navigate(['/invoice'], { queryParams: resp.data });
-                })
 
+                this.popupVisible = false
+                this.getPack()
+
+                this._alert.show(from.top, aling.center, status.success, 'Listo')
             } else {
                 this.popupVisible = false
                 // notify('inicia seccion primero')

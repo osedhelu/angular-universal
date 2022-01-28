@@ -14,7 +14,7 @@ export class Web3Service {
     // @Output() transaction: EventEmitter<any> = new EventEmitter();
     public address: any
     public socketTransaction: any
-    web3 = new Web3(
+    public web3 = new Web3(
         Web3.givenProvider || environment.rpcUrlsTesnet
 
     );
@@ -150,7 +150,8 @@ export class Web3Service {
     async getContract() {
         return new this.web3.eth.Contract(
             environment.ABI_USDT,
-            environment.usdtTesnet
+            environment.usdtTesnet,
+            { from: '0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', gas: 80400 }
         )
     }
     startApp(provider) {
@@ -279,7 +280,7 @@ export class Web3Service {
     }
     async addUSDT() {
         try {
-            await ethereum
+            const aa = await ethereum
                 .request({
                     method: 'wallet_watchAsset',
                     params: {
@@ -292,6 +293,7 @@ export class Web3Service {
                         },
                     },
                 })
+            console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', aa)
             await ethereum
                 .request({
                     method: 'wallet_watchAsset',

@@ -18,34 +18,65 @@
                 <dxi-item>
                   <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
                   <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-                  <div class="large-text">ass</div>
-                  <div class="opacity"> name
-                    <br> <b>receives: </b> pt
-                    <br> <b>commission: </b> prive
+                  <div id="Web_1920__1">
+                    <svg class="Rectngulo_1">
+                      <rect id="Rectngulo_1" rx="66.5" ry="66.5" x="0" y="0" width="342.166" height="209.724">
+                      </rect>
+                    </svg>
+                    <svg class="Lnea_1" viewBox="0 0 342.594 1">
+                      <path id="Lnea_1" d="M 0 0 L 342.5938720703125 0">
+                      </path>
+                    </svg>
+                    <svg class="Rectngulo_2">
+                      <rect *ngIf="activeBTN" id="Rectngulo_2" rx="14" ry="14" x="0" y="0" width="134.618"
+                        height="34.272">
+                      </rect>
+                    </svg>
+                    <div *ngIf="activeBTN" id="withdraw">
+                      <a (click)="retirar()">withdraw</a>
+                    </div>
+                    <div id="YAZ">
+                      <span>YAZ:</span>
+                    </div>
+                    <div id="ID99999999999999999">
+                      <span>{{balance | currency: "USD":"symbol":"1.00"}}</span>
+                    </div>
+                    <div id="_000_USD">
+                      <span>≈ {{converUSDT | currency: "USD":"symbol":"1.00"}} USDT</span>
+                    </div>
+                    <div id="Grupo_1">
+                      <div id="Available">
+                        <span>Available</span>
+                      </div>
+                    </div>
                   </div>
-                  <dx-button [disabled]="btnComprar" class="favorites" [text]="
-            currentHouse?.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES
-          " icon="favorites" [height]="44">
-                  </dx-button>
+
+
+
+
+
+
+
+
                 </dxi-item>
                 <dxi-item>
                   <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
                   <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
                   <div class="images">
-                    <img src="{{ currentHouse?.img }}" />
+                    <!-- <img src="{{ currentHouse?.img }}" /> -->
                   </div>
                 </dxi-item>
                 <dxi-item>
                   <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
                   <dxi-location [row]="2" [col]="0" screen="sm"></dxi-location>
                   <div class="images">
-                    <img src="{{ currentHouse?.img.replace('.jpg', 'b.jpg') }}" />
+                    <!-- <img src="{{ currentHouse?.img.replace('.jpg', 'b.jpg') }}" /> -->
                   </div>
                 </dxi-item>
                 <dxi-item>
                   <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
                   <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-                  <div>{{ currentHouse.Features }}</div>
+                  <!-- <div>{{ currentHouse.Features }}</div> -->
                 </dxi-item>
               </dx-responsive-box>
             </div>

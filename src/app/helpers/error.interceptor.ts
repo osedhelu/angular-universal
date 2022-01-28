@@ -14,6 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     console.log("Interception In Progress"); // Interception Stage
     const token: string = localStorage.getItem('token'); // This retrieves a token from local storage
     req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });// This clones HttpRequest and Authorization header with Bearer token added
+    // req = req.clone({ headers: req.headers.set('token-eth', token) });// This clones HttpRequest and Authorization header with Bearer token added
     req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
     req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
     return next.handle(req)
@@ -29,7 +30,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             }
             console.log("ERROR 401 UNAUTHORIZED") // in case of an error response the error message is displayed
           }
-          const err = error.error.message || error.statusText;
+          const err = error.error?.message || error.statusText;
           return throwError(error); // any further errors are returned to frontend                    
         })
       );

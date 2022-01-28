@@ -8,6 +8,7 @@ import { WithdarwComponent } from './withdraw.component';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxResponsiveBoxModule } from 'devextreme-angular/ui/responsive-box';
 import { DxScrollViewModule } from 'devextreme-angular/ui/scroll-view';
+import { CommonModule } from '@angular/common';
 const routes: Routes = [
     {
         path: 'withdraw',
@@ -21,7 +22,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         DxScrollViewModule,
         DxResponsiveBoxModule,
-        DxButtonModule
+        DxButtonModule,
+        CommonModule
     ],
 
 })

@@ -88,8 +88,8 @@ export class SignupComponent implements OnInit {
 
   wallet: any;
   Paises: any[] = []
-  searchModeOption = 'contains';
-  searchExprOption: any = 'nombre';
+  searchModeOption = 'startsWith';
+  searchExprOption: any = 'name';
   searchTimeoutOption = 200;
   minSearchLengthOption = 0;
   positions: string[];
@@ -98,7 +98,7 @@ export class SignupComponent implements OnInit {
     type: 'success',
     useSubmitBehavior: true,
     onClick: function () {
-      console.log(this)
+      // console.log(this)
       // Implement your logic here
     }
   };
@@ -196,9 +196,7 @@ export class SignupComponent implements OnInit {
       this._user.add(User).pipe(catchError((err: any) => {
         const { error } = err
         console.log('errorr', error)
-
-        this._alert.show(from.bottom, aling.right, status.error, error)
-
+        this._alert.show(from.bottom, aling.right, status.error, error.message)
         return throwError(e)
 
       })).subscribe(resp => {

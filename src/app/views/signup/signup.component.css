@@ -92,3 +92,6 @@ div.clock.big h2 .headline {
     margin-bottom: 20px;
     font-size: 75%
 }
+::ng-deep .dx-texteditor-input {
+  font-size: 15px;
+}

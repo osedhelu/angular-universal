@@ -17,8 +17,12 @@ export class TransactionService {
         const url = `${URL}/package/topay`
         return this.http.post(url, data)
     }
-     getBalance(): Observable<any> {
+    getBalance(): Observable<any> {
         const url = `${URL}/accountant`
         return this.http.get(url)
+    }
+    EmitRetiro() {
+        const url = `${URL}/accountant/retiro`
+        return this.http.post(url, { status: 'disponible' })
     }
 }

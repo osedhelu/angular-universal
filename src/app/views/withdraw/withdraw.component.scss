@@ -1,0 +1,159 @@
+
+.mediaViewInfo {
+		--web-view-name: Web 1920 – 1;
+		--web-view-id: Web_1920__1;
+		--web-scale-on-resize: true;
+		--web-enable-deep-linking: true;
+	}
+	:root {
+		--web-view-ids: Web_1920__1;
+	}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		border: none;
+	}
+	#Web_1920__1, #Web_1920__2  {
+		width: 348px;
+		height: 217px;
+		background-color: rgba(255,255,255,1);
+		overflow: hidden;
+		--web-view-name: Web 1920 – 1;
+		--web-view-id: Web_1920__1;
+		--web-scale-on-resize: true;
+		--web-enable-deep-linking: true;
+		#Rectngulo_1 {
+		fill: rgba(255,255,255,1);
+		stroke: rgba(112,112,112,1);
+		stroke-width: 1px;
+		stroke-linejoin: miter;
+		stroke-linecap: butt;
+		stroke-miterlimit: 4;
+		shape-rendering: auto;
+	}
+	.Rectngulo_1 {
+		position: absolute;
+		overflow: visible;
+		width: 343.166px;
+		height: 210.724px;
+		left: 2.5px;
+		top: 3.5px;
+	}
+	#Lnea_1 {
+		fill: transparent;
+		stroke: rgba(112,112,112,1);
+		stroke-width: 1px;
+		stroke-linejoin: miter;
+		stroke-linecap: butt;
+		stroke-miterlimit: 4;
+		shape-rendering: auto;
+	}
+	.Lnea_1 {
+		overflow: visible;
+		position: absolute;
+		width: 342.594px;
+		height: 1px;
+		left: 2.5px;
+		top: 57.968px;
+		transform: matrix(1,0,0,1,0,0);
+	}
+	#Rectngulo_2 {
+		fill: rgba(12,3,3,1);
+		stroke: rgba(255,255,255,1);
+		stroke-width: 1px;
+		stroke-linejoin: miter;
+		stroke-linecap: butt;
+		stroke-miterlimit: 4;
+		shape-rendering: auto;
+	}
+	.Rectngulo_2 {
+		position: absolute;
+		overflow: visible;
+		width: 135.618px;
+		height: 35.272px;
+		left: 113.772px;
+		top: 162.823px;
+	}
+	#withdraw {
+		left: 117.043px;
+		top: 166.147px;
+		position: absolute;
+		overflow: visible;
+		width: 127.888px;
+		height: 36.82343673706055px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 18px;
+		color: rgba(255,255,255,1);
+	}
+	#YAZ {
+		left: 8px;
+		top: 80px;
+		position: absolute;
+		overflow: visible;
+		width: 66px;
+		height: 36px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 20px;
+		color: rgba(0,0,0,1);
+	}
+	#ID99999999999999999 {
+		left: 75.317px;
+		top: 80.201px;
+		position: absolute;
+		overflow: visible;
+		width: 254px;
+		height: 36px;
+		text-align: right;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 23px;
+		color: rgba(0,0,0,1);
+		letter-spacing: -0.03px;
+	}
+	#_000_USD {
+		left: 106.85px;
+		top: 113.348px;
+		position: absolute;
+		overflow: visible;
+		width: 223.159px;
+		height: 36.10042953491211px;
+		text-align: right;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 14px;
+		color: rgba(0,0,0,1);
+		letter-spacing: -0.03px;
+	}
+	#Grupo_1 {
+		position: absolute;
+		width: 241px;
+		height: 38px;
+		left: 41px;
+		top: 10px;
+		overflow: visible;
+	}
+	#Available {
+		left: 0px;
+		top: 0px;
+		overflow: visible;
+		width: 242px;
+		height: 38px;
+		text-align: center;
+		font-family: Segoe UI;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 28px;
+		color: rgba(0,0,0,1);
+		letter-spacing: -0.03px;
+	}
+
+	}

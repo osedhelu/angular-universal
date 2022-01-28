@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/diagram',
     title: 'Diagram',
-    icon: 'ui-1_bell-53',
+    icon: 'design_vector',
     class: '',
   },
   // {

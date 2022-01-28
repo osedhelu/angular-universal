@@ -47,10 +47,11 @@
               <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
                 <dxi-item dataField="country" itemTemplate="templatecountry">
                   <div *dxTemplate=" let item of 'templatecountry'">
-                    <dx-select-box [value]="Usuario.country" [dataSource]="Paises" displayExpr="nombre" valueExpr="_id"
-                      [searchMode]="searchModeOption" [searchExpr]="searchExprOption"
-                      [searchTimeout]="searchTimeoutOption" [minSearchLength]="minSearchLengthOption"
-                      (onSelectionChanged)="keyDown($event)" [searchEnabled]="true" fieldTemplate="field">
+                    <dx-select-box [items]="['contains', 'startsWith', 'equals']" [value]="Usuario.country"
+                      [dataSource]="Paises" displayExpr="name" valueExpr="_id" [searchMode]="searchModeOption"
+                      [searchExpr]="searchExprOption" [searchTimeout]="searchTimeoutOption"
+                      [minSearchLength]="minSearchLengthOption" (onSelectionChanged)="keyDown($event)"
+                      [searchEnabled]="true" fieldTemplate="field">
                       <div *dxTemplate="let data of 'field'">
                         <div class="custom-item">
                           <i [class]="'flag-icon flag-icon-'+Usuario.country?.iso2.toLocaleLowerCase()"></i>
