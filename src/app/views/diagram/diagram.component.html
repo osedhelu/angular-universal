@@ -38,6 +38,7 @@
               <p>Country: <b>{{ currentEmployee.country.name }} <i
                     [class]="'flag-icon flag-icon-'+currentEmployee.country?.iso2.toLocaleLowerCase()"></i>
                 </b></p>
+              <p>Username: <b>{{ currentEmployee.username }}</b></p>
               <p>Email: <b>{{ currentEmployee.email }}</b></p>
               <p>Phone: <b> + {{currentEmployee.country.phone_code}} {{ currentEmployee.celular }}</b></p>
               <p>My ID: <b> {{currentEmployee._id}}</b></p>

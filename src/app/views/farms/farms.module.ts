@@ -8,6 +8,7 @@ import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxCheckBoxModule } from 'devextreme-angular/ui/check-box';
 import { DxAccordionModule } from 'devextreme-angular/ui/accordion'
 import { CommonModule } from '@angular/common';
+import { DxListModule, DxSelectBoxModule } from 'devextreme-angular';
 const routes: Routes = [
     {
         path: 'farms',
@@ -22,7 +23,9 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         DxDataGridModule,
         DxCheckBoxModule,
-        DxAccordionModule
+        DxAccordionModule,
+        DxSelectBoxModule,
+        DxListModule
     ],
 
 })

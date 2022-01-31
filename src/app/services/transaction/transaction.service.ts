@@ -3,6 +3,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment.hmr';
+import { walletType } from './withdeaw.interface';
 const { URL } = environment;
 @Injectable({
     providedIn: 'root',
@@ -25,4 +26,9 @@ export class TransactionService {
         const url = `${URL}/accountant/retiro`
         return this.http.post(url, { status: 'disponible' })
     }
+    getBalanceInfo(wallet: walletType) {
+        const url = `${URL}/accountant/infoBalance`
+        return this.http.post(url, { wallet })
+    }
+
 }

@@ -1,88 +1,152 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body all-icons">
-          <dx-scroll-view width="100%">
-            <div id='page'>
-              <dx-responsive-box id="responsiveBox" singleColumnScreen="sm" [screenByWidth]="screen">
-                <dxi-row [ratio]="1"></dxi-row>
-                <dxi-row [ratio]="1" screen="xs"></dxi-row>
-                <dxi-row [ratio]="1" screen="lg"></dxi-row>
-                <dxi-row [ratio]="1"></dxi-row>
-
-                <dxi-col [ratio]="1" screen="lg"></dxi-col>
-                <dxi-col [ratio]="1"></dxi-col>
-
-                <dxi-item>
-                  <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
-                  <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-                  <div id="Web_1920__1">
-                    <svg class="Rectngulo_1">
-                      <rect id="Rectngulo_1" rx="66.5" ry="66.5" x="0" y="0" width="342.166" height="209.724">
-                      </rect>
-                    </svg>
-                    <svg class="Lnea_1" viewBox="0 0 342.594 1">
-                      <path id="Lnea_1" d="M 0 0 L 342.5938720703125 0">
-                      </path>
-                    </svg>
-                    <svg class="Rectngulo_2">
-                      <rect *ngIf="activeBTN" id="Rectngulo_2" rx="14" ry="14" x="0" y="0" width="134.618"
-                        height="34.272">
-                      </rect>
-                    </svg>
-                    <div *ngIf="activeBTN" id="withdraw">
-                      <a (click)="retirar()">withdraw</a>
-                    </div>
-                    <div id="YAZ">
-                      <span>YAZ:</span>
-                    </div>
-                    <div id="ID99999999999999999">
-                      <span>{{balance | currency: "USD":"symbol":"1.00"}}</span>
-                    </div>
-                    <div id="_000_USD">
-                      <span>≈ {{converUSDT | currency: "USD":"symbol":"1.00"}} USDT</span>
-                    </div>
-                    <div id="Grupo_1">
-                      <div id="Available">
-                        <span>Available</span>
-                      </div>
-                    </div>
-                  </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category osd-text">savings balance
+          </h5>
+          <!-- <h4 class="card-title">24 Hours Performance</h4> -->
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div class="form-group price_elem row mb-0 pb-0">
+              <label class="col-sm-2 col-md-2 form-control-savings nopaddingtop pr-0 mr-0">USDT:</label>
+              <div class="col-sm-10 col-md-10 ml-0 pl-0">
+                <p class="product-form-price mb-0 pb-0" id="product-form-price">${{balance.A | currency:
+                  ' ':'symbol':'1.00':'it'}}</p>
 
 
-
-
-
-
-
-
-                </dxi-item>
-                <dxi-item>
-                  <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
-                  <dxi-location [row]="1" [col]="1" screen="sm"></dxi-location>
-                  <div class="images">
-                    <!-- <img src="{{ currentHouse?.img }}" /> -->
-                  </div>
-                </dxi-item>
-                <dxi-item>
-                  <dxi-location [row]="1" [col]="0" screen="lg"></dxi-location>
-                  <dxi-location [row]="2" [col]="0" screen="sm"></dxi-location>
-                  <div class="images">
-                    <!-- <img src="{{ currentHouse?.img.replace('.jpg', 'b.jpg') }}" /> -->
-                  </div>
-                </dxi-item>
-                <dxi-item>
-                  <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
-                  <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-                  <!-- <div>{{ currentHouse.Features }}</div> -->
-                </dxi-item>
-              </dx-responsive-box>
+              </div>
             </div>
-          </dx-scroll-view>
+            <p class="usdtPrice">≈ {{balance.A/USDTYAZ |currency:
+              ' ':'symbol':'1.00':'it'}} YAZ</p>
+
+
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="form-group price_elem row mb-0 pb-0 d-flex justify-content-center">
+            <button (click)="getModalAhorro('AHORRO', 'Savings Balance (USDT)')"
+              class="btn btn-danger btn-sm">Detail</button>
+
+          </div>
         </div>
       </div>
     </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category osd-text">available balance
+
+          </h5>
+          <!-- <h4 class="card-title">24 Hours Performance</h4> -->
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div class="form-group price_elem row mb-0 pb-0">
+              <label class="col-sm-2 col-md-2 form-control-label nopaddingtop pr-0 mr-0">YAZ:</label>
+              <div class="col-sm-10 col-md-10 ml-0 pl-0">
+                <p class="product-form-price mb-0 pb-0" id="product-form-price">${{balance.D | currency:
+                  ' ':'symbol':'1.00':'it'}}</p>
+
+
+              </div>
+            </div>
+            <p class="usdtPrice">≈ ${{balance.D * USDTYAZ | currency:
+              ' ':'symbol':'.00':'it'}} USDT</p>
+
+
+          </div>
+        </div>
+        <div class="card-footer">
+          <div
+            [class]="this.activeBTN?'form-group price_elem row mb-0 pb-0 d-flex justify-content-around': 'form-group price_elem row mb-0 pb-0 d-flex justify-content-center'">
+            <button *ngIf="this.activeBTN" (click)="retirar()" class="btn btn-danger btn-sm">Withdraw</button>
+            <button class="btn btn-danger btn-sm"
+              (click)="getModalAhorro('DISPONIBLE', 'Available Balance (YAZ)')">Detail</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category osd-text">reserve balance
+
+          </h5>
+          <!-- <h4 class="card-title">24 Hours Performance</h4> -->
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div class="form-group price_elem row mb-0 pb-0">
+              <label class="col-sm-2 col-md-2 form-control-label nopaddingtop pr-0 mr-0">YAZ:</label>
+              <div class="col-sm-10 col-md-10 ml-0 pl-0">
+                <p class="product-form-price mb-0 pb-0" id="product-form-price">${{balance.R | currency:
+                  ' ':'symbol':'.00':'it'}}</p>
+
+
+              </div>
+            </div>
+            <p class="usdtPrice">≈ {{balance.R * USDTYAZ| currency:
+              ' ':'symbol':'.00':'it'}} USDT</p>
+
+
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="form-group price_elem row mb-0 pb-0 d-flex justify-content-center">
+            <button (click)="getModalAhorro('RESERVADO', 'Reserve Balance (YAZ)')"
+              class="btn btn-danger btn-sm">Detail</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <dx-popup [width]="860" [showTitle]="true" [title]="modaltitle" [dragEnabled]="false" [closeOnOutsideClick]="true"
+      [(visible)]="popupVisible">
+      <div *dxTemplate="let data of 'content'">
+        <div class="popup-property-details">
+          <dx-data-grid id="gridContainer" [dataSource]="balaceneDetail" [showBorders]="true">
+            <dxi-column dataField="createdAt" alignment="center" dataType="date" caption="Date">
+            </dxi-column>
+            <dxi-column dataField="btcRef" caption="Detail" alignment="center"></dxi-column>
+            <dxi-column dataField="origin" caption="Origin / Destination">
+
+            </dxi-column>
+
+            <dxi-column dataField="debito" caption="Entry" cellTemplate="tmpdebito">
+
+              <div *dxTemplate="let info of 'tmpdebito'">
+                <div *ngIf="dact">
+                  {{info.row.data?.debito | currency: " ":"symbol":"1.00": "it"}}
+                </div>
+
+              </div>
+            </dxi-column>
+            <dxi-column dataField="credito" caption="Egress" cellTemplate="tmpcredito">
+              <div *dxTemplate="let info of 'tmpcredito'">
+                <div *ngIf="dact">
+                  {{info.row.data?.credito | currency: " ":"symbol":"1.00": "it"}}
+                </div>
+              </div>
+            </dxi-column>
+            <dxi-column fixedPosition="right" caption="Balance   " dataType="number" format="currency"
+              cellTemplate="tmpBalcne">
+              <div *dxTemplate="let info of 'tmpBalcne'">
+                <div *ngIf="dact">
+                  {{info.row.data?.prevBalance + info.row.data?.debito -
+                  info.row.data?.credito | currency: " ":"symbol":"1.00": "it"}}
+                </div>
+              </div>
+            </dxi-column>
+
+            <dxo-paging [pageSize]="12"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+          </dx-data-grid>
+        </div>
+      </div>
+    </dx-popup>
   </div>
 </div>

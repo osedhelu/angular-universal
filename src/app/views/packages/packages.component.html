@@ -10,7 +10,7 @@
               <div>
                 <div class="address">{{ house?.name }}</div>
                 <div class="price large-text">
-                  {{ house.Price | currency: "USD":"symbol":"1.0-0" }}
+                  ${{ house.Price | currency: " ":"symbol":".00":"it" }}
                 </div>
                 <div class="agent" *ngIf="house.Favorite">
                   <div id="house{{ house.ID }}">
@@ -70,12 +70,12 @@
             <dxi-item>
               <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
               <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-              <div class="large-text">{{
-                currentHouse.Price | currency: "USD":"symbol":"1.0-0"
+              <div class="large-text">${{
+                currentHouse.Price | currency: " ":"symbol":"1.00": "it"
                 }}</div>
               <div class="opacity">{{ currentHouse?.name }}
-                <br> <b>receives: </b> {{ currentHouse?.receives | currency: "USD":"symbol":"1.0-0"}}
-                <br> <b>commission: </b> {{ currentHouse.commission }}
+                <br> <b>receives: </b> ${{ currentHouse?.receives | currency: " ":"symbol":"1.00": "it"}}
+                <br> <b>commission: </b> {{ currentHouse.commission | currency: " ":"symbol":"1.00": "it"}}
               </div>
               <dx-button [disabled]="btnComprar" class="favorites" [text]="
             currentHouse.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES
@@ -142,21 +142,21 @@
                       {{ipackageDetail.typeSponsor}}
                     </td>
                     <td *ngIf="ipackageDetail.iivComision">
-                      {{ipackageDetail.iivComision | currency:
-                      "USD":"symbol":"1.00"}} yaz
+                      ${{ipackageDetail.iivComision | currency:
+                      " ":"symbol":"1.00": "it"}} yaz
                     </td>
                     <td *ngIf="ipackageDetail.iiCinicial">
-                      {{ipackageDetail.iiCinicial | currency:
-                      "USD":"symbol":"1.00"}} yaz
+                      ${{ipackageDetail.iiCinicial | currency:
+                      " ":"symbol":"1.00": "it"}} yaz
                     </td>
                     <td *ngIf="ipackageDetail.iiDiluida">
-                      {{ipackageDetail.iiDiluida | currency:
-                      "USD":"symbol":"1.00"}} yaz
+                      ${{ipackageDetail.iiDiluida | currency:
+                      " ":"symbol":"1.00": "it"}} yaz
                     </td>
 
                     <td *ngIf="!ipackageDetail.typeSponsor">
-                      {{ipackageDetail?.package.Price | currency:
-                      "USD":"symbol":"1.00"}}
+                      ${{ipackageDetail?.package.Price | currency:
+                      " ":"symbol":"1.00": "it"}}
                     </td>
                   </tr>
                 </tbody>
@@ -179,13 +179,13 @@
                   [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">
                     <div *dxTemplate="let info of 'cellTemplate'">
-                      daily {{info.row.data?.position}}
+                      {{info.row.data.transaction?.createdAt | date :'dd-MMM-yy h:mm:ss a '}}
                     </div>
                   </dxi-column>
                   <dxi-column caption="debito" cellTemplate="item">
                     <div *dxTemplate="let item of 'item'">
-                      {{item.row.data.transaction?.debito | currency:
-                      "USD":"symbol":"1.00"}} yaz
+                      ${{item.row.data.transaction?.debito | currency:
+                      " ":"symbol":"1.00": "it"}} yaz
                     </div>
 
                   </dxi-column>
@@ -194,8 +194,8 @@
                       {{item.row.data?.Observacion }}
                     </div>
                   </dxi-column>
-                  <dxi-column caption="time" cellTemplate="detail">
-                    <div class="clock">
+                  <dxi-column caption="time" cellTemplate="restante">
+                    <div *dxTemplate="let item of 'restante'" class="clock">
                       <div class="time"><span class="hour">19</span>:<span class="minute">48</span>:<span
                           class="second">03</span>
                       </div>

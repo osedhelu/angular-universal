@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment.hmr';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
@@ -11,8 +11,10 @@ const { URL, URL_SOCKET } = environment;
 })
 export class SocketService {
   private socket: Socket;
+  @Output() close: EventEmitter<any> = new EventEmitter();
+  // public menuActive: boolean = false
   constructor(private _alert: AlertService, private router: Router) {
-    console.log('.........................',URL_SOCKET)
+    console.log('.........................', URL_SOCKET)
     if (!!localStorage.getItem('token')) {
       this.socket = io(URL_SOCKET, {
         withCredentials: true,
@@ -21,17 +23,7 @@ export class SocketService {
           'x-meta': localStorage.getItem('address')
         },
       })
-      this.socket.on('error', (e) => {
-        console.log('/////////////////////////', e)
-        if (!e.ok) {
-          this._alert.show(from.bottom, aling.right, status.error, 'actualiza la seccion')
-          localStorage.removeItem('token')
-          localStorage.removeItem('eth-token')
-          localStorage.removeItem('user-eth')
-          this.router.navigate(['/packages'])
-          this.disconnect()
-        }
-      })
+
     }
   }
 

@@ -97,10 +97,6 @@ export class SignupComponent implements OnInit {
     text: 'Register',
     type: 'success',
     useSubmitBehavior: true,
-    onClick: function () {
-      // console.log(this)
-      // Implement your logic here
-    }
   };
 
   states: string[];
@@ -173,9 +169,6 @@ export class SignupComponent implements OnInit {
     try {
       e.preventDefault();
       const { web3 } = this._web3;
-
-
-
       const User: IUser = {
         email: this.Usuario.Email,
         password: this.Usuario.Password,
@@ -200,10 +193,9 @@ export class SignupComponent implements OnInit {
         return throwError(e)
 
       })).subscribe(resp => {
-
-        this._alert.show(from.bottom, aling.right, status.success, 'nuevo usuario')
+        localStorage.removeItem('sponsor')
+        this._alert.show(from.bottom, aling.right, status.success, `Welcome to yafuzgame: ${User.username}`)
         this.router.navigate(['/packages'])
-
       })
       e.preventDefault();
     } catch (err) {

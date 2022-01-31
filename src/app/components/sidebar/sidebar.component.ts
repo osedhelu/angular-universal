@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { SocketService } from '@services/SocketService/socket.service'
 
 declare interface RouteInfo {
   path: string
@@ -7,43 +8,26 @@ declare interface RouteInfo {
   class: string
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Inicio', icon: 'design_app', class: '' },
-  { path: '/packages', title: 'Paquetes', icon: 'location_map-big', class: '' },
-  { path: '/withdraw', title: 'withdraw', icon: 'business_bank', class: '' },
-
-
+  { path: '/dashboard', title: 'HOME', icon: 'design_app', class: '' },
+  { path: '/packages', title: 'PACKETS', icon: 'location_map-big', class: '' },
+  { path: '/withdraw', title: 'BALANCE', icon: 'business_bank', class: '' },
   {
     path: '/diagram',
-    title: 'Diagram',
+    title: 'REFERRED',
     icon: 'design_vector',
     class: '',
   },
-  // {
-  //   path: '/user-profile/nuevo',
-  //   title: 'User Profile',
-  //   icon: 'users_single-02',
-  //   class: '',
-  // },
-  // {
-  //   path: '/table-list',
-  //   title: 'Table List',
-  //   icon: 'design_bullet-list-67',
-  //   class: '',
-  // },
-  // {
-  //   path: '/typography',
-  //   title: 'Typography',
-  //   icon: 'text_caps-small',
-  //   class: '',
-  // },
-  // {
-  //   path: '/upgrade',
-  //   title: 'Upgrade to PRO',
-  //   icon: 'objects_spaceship',
-  //   class: 'active active-pro',
-  // },
-]
+  {
+    path: '/farms',
+    title: 'User Profile',
+    icon: 'business_money-coins',
+    class: '',
+  },
 
+]
+export const ROUTESdefaul: RouteInfo[] = [
+  { path: '/packages', title: 'PACKETS', icon: 'location_map-big', class: '' },
+]
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -52,10 +36,18 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[]
 
-  constructor() { }
+  constructor(private _s: SocketService) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter((menuItem) => menuItem)
+    this.menuItems = ROUTESdefaul
+    this._s.close.subscribe((event) => {
+      console.log("service sockert sidebar", event)
+      if (event) {
+        this.menuItems = ROUTES.filter((menuItem) => menuItem)
+      } else {
+        this.menuItems = ROUTESdefaul
+      }
+    })
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

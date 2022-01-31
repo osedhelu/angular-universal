@@ -36,6 +36,7 @@ export class NavbarComponent implements OnInit {
   public isCollapsed = true;
   userLogin: string
   login: Boolean = false
+  username: string = ''
   constructor(location: Location,
     private _socket: SocketService,
     private element: ElementRef, private router: Router, public _web3: Web3Service, private _auth: AuthService,
@@ -58,20 +59,7 @@ export class NavbarComponent implements OnInit {
         this.mobile_menu_visible = 0;
       }
     });
-    if (!!localStorage.getItem('user-eth')) {
-      this.userLogin = localStorage.getItem('user-eth')
-      this.me()
-      this._socket.on('info').subscribe(resp => {
-        console.log(resp)
-      })
-      this._socket.on('allUser').subscribe(resp => {
-        console.log(resp)
-      })
-
-      this.login = true
-    } else {
-      this.login = false
-    }
+    this.activeSocket()
   }
 
   collapse() {
@@ -211,9 +199,10 @@ export class NavbarComponent implements OnInit {
         this.userLogin = userLogin
         this.router.navigate(['/dashboard'])
         this._web3.selectRed()
+        this._socket.initConecion()
+        this.activeSocket()
 
         // this._web3.se()
-        this._socket.initConecion()
       })
       this.me()
     } catch (err) {
@@ -250,10 +239,7 @@ export class NavbarComponent implements OnInit {
     })
 
   }
-  irCompras() {
-    console.log('farms')
-    this.router.navigate(['farms'])
-  }
+
   getUrlAfiliado(event: any): void {
     const isIEorEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
     const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
@@ -269,5 +255,43 @@ export class NavbarComponent implements OnInit {
         this._alert.show(from.bottom, aling.right, status.info, 'link de referido')
       });
     }
+  }
+  activeSocket() {
+    if (!!localStorage.getItem('user-eth')) {
+      this.userLogin = localStorage.getItem('user-eth')
+      this.me()
+      this._socket.on('error').subscribe((e) => {
+        if (!e.ok) {
+          this._alert.show(from.bottom, aling.right, status.error, 'actualiza la seccion')
+          localStorage.removeItem('token')
+          localStorage.removeItem('eth-token')
+          localStorage.removeItem('user-eth')
+          this.router.navigate(['/packages'])
+          this._socket.disconnect()
+          this.login = false
+        }
+      })
+      this._socket.on('allUser').subscribe(resp => {
+        console.log('allUser', resp)
+      })
+
+      this.login = true
+    } else {
+      this.login = false
+    }
+
+    this._socket.on("connect").subscribe((r: any) => {
+      this._socket.on('info').subscribe(resp => {
+        console.log('info', resp)
+
+        this._alert.show(from.bottom, aling.right, status.success, `Welcome!! ${resp.username}`)
+        this._socket.close.emit(true)
+        this.username = resp.username
+      })
+    });
+    this._socket.on("disconnect").subscribe(() => {
+      this._alert.show(from.bottom, aling.right, status.error, 'Goodbye!! we will not see soon')
+      this._socket.close.emit(false)
+    });
   }
 }

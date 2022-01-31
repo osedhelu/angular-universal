@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   countries: Iterable<string>;
 
   pipe: any = new DecimalPipe('en-US');
-  types: string[] = ['spline', 'stackedspline', 'fullstackedspline'];
+  types: string[] = ['fullstackedspline', 'spline', 'stackedspline'];
 
   architecturesInfo: ArchitectureInfo[];
 
@@ -27,10 +27,10 @@ export class DashboardComponent implements OnInit {
 
   calculateTotal(pieChart) {
     const totalValue = pieChart.getAllSeries()[0].getVisiblePoints().reduce((s, p) => s + p.originalValue, 0);
-    return this.pipe.transform(totalValue, '1.0-0');
+    return this.pipe.transform(totalValue, '1.00');
   }
   getTOtal() {
-    return this.pipe.transform(this.totalRecaudar, '1.0-0');
+    return this.pipe.transform(this.totalRecaudar, '1.00');
   }
   getImagePath(country) {
     return `images/flags/${country.replace(/\s/, '').toLowerCase()}.svg`;
