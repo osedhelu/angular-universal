@@ -26,6 +26,8 @@ export function app(): express.Express {
   (global as any).navigator = win.navigator;
   (global as any).Buffer = Buffer;
   (global as any).localStorage = localStorage;
+  (global as any).isFinite = isFinite;
+
   // (window as any).Buffer = window.Buffer || Buffer;
   (window as any).matchMedia = window.matchMedia || function () {
     return {

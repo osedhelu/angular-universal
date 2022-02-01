@@ -278,9 +278,10 @@ export class Web3Service {
             }
         }
     }
-    async addUSDT() {
-        try {
-            const aa = await ethereum
+    addUSDT() {
+
+        if (!localStorage.getItem('TOKEN_USDT')) {
+            ethereum
                 .request({
                     method: 'wallet_watchAsset',
                     params: {
@@ -293,8 +294,18 @@ export class Web3Service {
                         },
                     },
                 })
-            console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', aa)
-            await ethereum
+                .then((success) => {
+                    if (success) {
+                        localStorage.setItem('TOKEN_USDT', 'true')
+                        console.log('USDT successfully added to wallet!');
+                    } else {
+                        throw new Error('Something went wrong.');
+                    }
+                })
+                .catch(console.error);
+        }
+        if (!localStorage.getItem('TOKEN_YAZ')) {
+            ethereum
                 .request({
                     method: 'wallet_watchAsset',
                     params: {
@@ -306,12 +317,18 @@ export class Web3Service {
                             image: 'https://image.shutterstock.com/image-vector/osd-letter-monogram-logo-design-260nw-1954215178.jpg',
                         },
                     },
+                }).then((success) => {
+                    if (success) {
+                        localStorage.setItem('TOKEN_YAZ', 'true')
+                        console.log('add token YAZ')
+                    } else {
+                        throw new Error('Something went wrong.');
+                    }
                 })
-        } catch (err) {
-            log('ho', err)
+                .catch(console.error);
+
 
         }
-
     }
     async updateBalance(address) {
         const _Contract = await this.getContract()

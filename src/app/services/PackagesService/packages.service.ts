@@ -49,5 +49,9 @@ export class PackagesService {
     return this.http.get(url).toPromise()
 
   }
+  getPackagaFo() {
+    let url = `${URL}/package/meses`;
+    return this.http.get(url).toPromise()
+  }
 
 }

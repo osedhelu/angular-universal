@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
   public isCollapsed = true;
   userLogin: string
   login: Boolean = false
-  username: string = ''
+  username: string = '';
   constructor(location: Location,
     private _socket: SocketService,
     private element: ElementRef, private router: Router, public _web3: Web3Service, private _auth: AuthService,
@@ -279,19 +279,27 @@ export class NavbarComponent implements OnInit {
     } else {
       this.login = false
     }
-
+    this.conect()
+    this.disconext()
+  }
+  disconext() {
+    this._socket.on("disconnect").subscribe(() => {
+      this._alert.show(from.bottom, aling.right, status.error, 'Goodbye!! we will not see soon')
+      this._socket.reconnect()
+      this.activeSocket()
+      this._socket.close.emit(false)
+      this.router.navigate(['/packages'])
+    });
+  }
+  conect() {
     this._socket.on("connect").subscribe((r: any) => {
+      console.log('conexxxion', r)
       this._socket.on('info').subscribe(resp => {
         console.log('info', resp)
-
         this._alert.show(from.bottom, aling.right, status.success, `Welcome!! ${resp.username}`)
         this._socket.close.emit(true)
         this.username = resp.username
       })
-    });
-    this._socket.on("disconnect").subscribe(() => {
-      this._alert.show(from.bottom, aling.right, status.error, 'Goodbye!! we will not see soon')
-      this._socket.close.emit(false)
     });
   }
 }

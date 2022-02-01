@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core'
+import { PackagesService } from '@services/PackagesService/packages.service';
 import { ArchitectureInfo, DashboardService } from './dashboard.service';
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   architecturesInfo: ArchitectureInfo[];
 
-  constructor(service: DashboardService) {
+  constructor(service: DashboardService, private _package: PackagesService) {
     this.service = service;
     this.countries = new Set(service.getData().map((item) => item.country));
     this.architecturesInfo = service.getArchitecturesInfo();
@@ -36,8 +37,14 @@ export class DashboardComponent implements OnInit {
     return `images/flags/${country.replace(/\s/, '').toLowerCase()}.svg`;
   }
   ngOnInit() {
+    this.getMesesPAckage()
 
   }
 
+  async getMesesPAckage() {
+
+    const aa = await this._package.getPackagaFo()
+    console.log('..........meses...package', aa)
+  }
 
 }

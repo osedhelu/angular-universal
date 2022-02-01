@@ -9,7 +9,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'HOME', icon: 'design_app', class: '' },
-  { path: '/packages', title: 'PACKETS', icon: 'location_map-big', class: '' },
+  { path: '/packages', title: 'PACKS', icon: 'location_map-big', class: '' },
   { path: '/withdraw', title: 'BALANCE', icon: 'business_bank', class: '' },
   {
     path: '/diagram',
@@ -19,14 +19,14 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/farms',
-    title: 'User Profile',
+    title: 'buy and sales',
     icon: 'business_money-coins',
     class: '',
   },
 
 ]
 export const ROUTESdefaul: RouteInfo[] = [
-  { path: '/packages', title: 'PACKETS', icon: 'location_map-big', class: '' },
+  { path: '/packages', title: 'PACKS', icon: 'location_map-big', class: '' },
 ]
 @Component({
   selector: 'app-sidebar',

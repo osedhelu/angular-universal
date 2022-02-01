@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
 import { AuthService } from '@services/auth.service';
@@ -6,13 +6,14 @@ import { TransactionService } from '@services/transaction/transaction.service';
 import { Web3Service } from '@services/web3Service/web3.service';
 import { iPackage, PackagesService } from '@services/PackagesService/packages.service';
 import { FarmsService } from '@services/FarmsService/farms.service'
+import { countdown } from '@utils/coundow.utils';
 
 @Component({
     selector: 'app-packages',
     templateUrl: './packages.component.html',
     styleUrls: ['./packages.component.scss'],
 })
-export class PackagesComponent implements OnInit {
+export class PackagesComponent implements OnInit, OnDestroy {
     houses: iPackage[];
     data: any[] = []
     currentHouse: iPackage;
@@ -23,6 +24,10 @@ export class PackagesComponent implements OnInit {
     dimencion: number = 660
     popupFram: boolean = false;
     ipackageDetail: any = {}
+    HOURS: number = 0
+    MINUTES: number = 0
+    SECONDS: number = 0
+    callback: any
     screen(width): any {
         if (width > 700) {
             this.dimencion = 660
@@ -32,6 +37,7 @@ export class PackagesComponent implements OnInit {
         }
         return (width < 700) ? 'sm' : 'lg';
     }
+
     constructor(private _package: PackagesService,
         private _venta: FarmsService,
         private _alert: AlertService, private _web3: Web3Service, private _tran: TransactionService, private _auth: AuthService, private router: Router) {
@@ -41,7 +47,8 @@ export class PackagesComponent implements OnInit {
 
     ngOnInit() {
         // this._alert.show(from.bottom, aling.right, status.success, 'bue')
-
+        // const aa = sumar_horas({ fecha: new Date(), horas: 24 })
+        // const date = new Date('2022-4-02')
         this.getPack()
     }
     getPack() {
@@ -67,7 +74,15 @@ export class PackagesComponent implements OnInit {
             } else {
                 this.currentHouse = packageo;
                 const infoVenta = await this._venta.getVentasToPackage(packageo?._id)
-                console.log('info Venta ', infoVenta)
+                console.log(infoVenta)
+                const { bookDaily } = infoVenta.data
+                for (let i = 0; i < bookDaily.length; i++) {
+                    const daily = bookDaily[i]
+                    if (daily.complete === 0) {
+                        this.recorerTime(new Date(daily.transaction.createdAt))
+                        break;
+                    }
+                }
                 this.ipackageDetail = infoVenta.data
                 ////
                 this.popupFram = true
@@ -128,5 +143,22 @@ export class PackagesComponent implements OnInit {
             }
         }
     }
+    recorerTime(fecha: Date) {
+        console.log(fecha)
+        if (this.callback) {
+            clearInterval(this.callback)
+        }
+        this.callback = countdown(fecha, (r) => {
+            this.HOURS = r.hours
+            this.MINUTES = r.minutes
+            this.SECONDS = r.seconds
+        }, countdown.HOURS | countdown.MINUTES | countdown.SECONDS)
+    }
 
+    ngOnDestroy(): void {
+        if (this.callback) {
+            clearInterval(this.callback)
+        }
+
+    }
 }

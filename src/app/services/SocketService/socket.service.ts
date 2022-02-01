@@ -16,14 +16,7 @@ export class SocketService {
   constructor(private _alert: AlertService, private router: Router) {
     console.log('.........................', URL_SOCKET)
     if (!!localStorage.getItem('token')) {
-      this.socket = io(URL_SOCKET, {
-        withCredentials: true,
-        extraHeaders: {
-          'x-token': localStorage.getItem('token'),
-          'x-meta': localStorage.getItem('address')
-        },
-      })
-
+      this.initConecion()
     }
   }
 
@@ -53,5 +46,8 @@ export class SocketService {
     this.socket.disconnect()
     this.socket.disconnected
   }
-
+  reconnect() {
+    this.socket.disconnect()
+    this.initConecion()
+  }
 }

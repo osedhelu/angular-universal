@@ -175,7 +175,7 @@
               <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
               <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
               <div *ngIf="ipackageDetail.bookDaily">
-                <dx-data-grid id="gridContainer" [dataSource]="ipackageDetail.bookDaily" keyExpr="_id"
+                <dx-data-grid id="gridContainer" [dataSource]="ipackageDetail?.bookDaily" keyExpr="_id"
                   [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">
                     <div *dxTemplate="let info of 'cellTemplate'">
@@ -195,10 +195,13 @@
                     </div>
                   </dxi-column>
                   <dxi-column caption="time" cellTemplate="restante">
-                    <div *dxTemplate="let item of 'restante'" class="clock">
-                      <div class="time"><span class="hour">19</span>:<span class="minute">48</span>:<span
-                          class="second">03</span>
+                    <div *dxTemplate="let item of 'restante'">
+                      <div class="clock" *ngIf="!item.row.data?.complete">
+                        <div class="time"><span class="hour">{{HOURS}}</span>:<span
+                            class="minute">{{MINUTES}}</span>:<span class="second">{{SECONDS}}</span>
+                        </div>
                       </div>
+
                     </div>
                   </dxi-column>
 
