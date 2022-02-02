@@ -185,7 +185,7 @@ export class NavbarComponent implements OnInit {
   async ConexionMetamask() {
     try {
       const account = await this._web3.getAccount()
-      await this._web3.selectAccount()
+      // await this._web3.selectAccount()
       const userLogin = `${account.substring(0, 4)}....${account.slice(-5)}`
       const token = await this._web3.getToken(account)
       localStorage.setItem('eth-token', token)
