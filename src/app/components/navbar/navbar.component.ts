@@ -184,13 +184,14 @@ export class NavbarComponent implements OnInit {
   }
   async ConexionMetamask() {
     try {
-      await this._web3.selectAccount()
       const account = await this._web3.getAccount()
+      await this._web3.selectAccount()
       const userLogin = `${account.substring(0, 4)}....${account.slice(-5)}`
       const token = await this._web3.getToken(account)
       localStorage.setItem('eth-token', token)
 
       this._auth.ethToken().subscribe((resp: any) => {
+        this._web3.selectRed()
         console.log(resp)
         localStorage.setItem('token', resp.access_token)
         localStorage.setItem('_id', resp._id)
@@ -198,9 +199,9 @@ export class NavbarComponent implements OnInit {
         this.login = true
         this.userLogin = userLogin
         this.router.navigate(['/dashboard'])
-        this._web3.selectRed()
         this._socket.initConecion()
         this.activeSocket()
+
 
         // this._web3.se()
       })

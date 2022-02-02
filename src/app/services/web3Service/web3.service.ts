@@ -15,7 +15,7 @@ export class Web3Service {
     public address: any
     public socketTransaction: any
     public web3 = new Web3(
-        Web3.givenProvider || environment.rpcUrlsTesnet
+        Web3.givenProvider || environment.New_RPC_URL
 
     );
     currentAccount: any
@@ -151,7 +151,7 @@ export class Web3Service {
         return new this.web3.eth.Contract(
             environment.ABI_USDT,
             environment.usdtTesnet,
-            { from: '0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', gas: 80400 }
+            { from: environment.wallet1, gas: 80400 }
         )
     }
     startApp(provider) {
@@ -178,47 +178,6 @@ export class Web3Service {
                 params: [{ eth_accounts: {} }],
             })
 
-        // if (accountsPermission) {
-        // console.log(aa)
-        // const { ok, data } = aa
-        // if (ok) {
-
-        //   _storage.agregar('token', data.token);
-        //   _storage.agregar('address', address);
-        //   _storage.agregar('menu', data.menu);
-        //   this.router.navigate(['/dashboard']);
-        //   this._alert.show(`Buenas Bienvenido`, {
-        //     classname: 'bg-success text-light',
-        //     delay: 800,
-        //   });
-
-        //         // } else {
-        //         //   this.router.navigate(['/register/nuevo']);
-        //         // }
-
-        //         console.log('eth_accounts permission successfully requested!');
-        //     }
-        // })
-        //     .catch (async (error: any) => {
-        //     console.log("error", error)
-        //     if (error?.message) {
-        //         if (error.message.match('wallet_requestPermissions')) {
-        //         }
-        //         console.log(error.message);
-        //     }
-        //     if (error.error) {
-        //         if (error.error.code === 998877)
-        //             this.router.navigate(['/register/nuevo']);
-        //     }
-        //     if (error.code === 4001) {
-        //         console.log('Permissions needed to continue.');
-        //     }
-        //         } catch (addError) {
-        //             // handle "add" error
-        //         }
-        // const aa = await this._loginService.Validate(token);
-        //   k      // console.log(token)
-        // });
     }
     async getToken(address: string) {
         return await eth_sign(
@@ -235,7 +194,7 @@ export class Web3Service {
 
             const aa = await ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: this.web3.utils.toHex(environment?.chainIdTestnet) }],
+                params: [{ chainId: this.web3.utils.toHex(environment?.ChainID) }],
             });
 
             console.log(aa)
@@ -257,15 +216,15 @@ export class Web3Service {
                     // blockExplorerUrls: ['https://bscscan.com/'],
                     // },
                     {
-                        chainId: this.web3.utils.toHex(environment.chainIdTestnet),
-                        chainName: 'Smart Chain - Testnet',
+                        chainId: this.web3.utils.toHex(environment.ChainID),
+                        chainName: environment.Network_name,
                         nativeCurrency: {
-                            name: 'BNB',
-                            symbol: 'BNB',
+                            name: environment.Symbol,
+                            symbol: environment.Symbol,
                             decimals: 18,
                         },
-                        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-                        blockExplorerUrls: ['https://testnet.bscscan.com'],
+                        rpcUrls: environment.New_RPC_URL,
+                        blockExplorerUrls: environment.Block_Explorer_URL,
                     },
 
                 ];
@@ -304,7 +263,7 @@ export class Web3Service {
                 })
                 .catch(console.error);
         }
-        if (!localStorage.getItem('TOKEN_YAZ')) {
+        if (!localStorage.getItem('TOKEN_YAZ1')) {
             ethereum
                 .request({
                     method: 'wallet_watchAsset',
@@ -312,22 +271,20 @@ export class Web3Service {
                         type: 'ERC20',
                         options: {
                             address: environment.contract_yaz,
-                            symbol: 'osd',
+                            symbol: 'YAZ',
                             decimals: 18,
-                            image: 'https://image.shutterstock.com/image-vector/osd-letter-monogram-logo-design-260nw-1954215178.jpg',
+                            image: 'https://presale.yafuzgame.com/public/icon/logo.svg',
                         },
                     },
                 }).then((success) => {
                     if (success) {
-                        localStorage.setItem('TOKEN_YAZ', 'true')
+                        localStorage.setItem('TOKEN_YAZ1', 'true')
                         console.log('add token YAZ')
                     } else {
                         throw new Error('Something went wrong.');
                     }
                 })
                 .catch(console.error);
-
-
         }
     }
     async updateBalance(address) {

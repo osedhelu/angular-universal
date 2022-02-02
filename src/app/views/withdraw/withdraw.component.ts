@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '@environments/environment.hmr';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
 import { TransactionService } from '@services/transaction/transaction.service';
 import { walletType } from '@services/transaction/withdeaw.interface';
@@ -49,7 +50,7 @@ export class WithdarwComponent implements OnInit {
     try {
       const web3 = this._web3.web3;
       const amo = await web3.eth.sendTransaction({
-        to: '0x6c80d5fC5d1758dE0248f49128CF1690e688dadc',
+        to: environment.wallet1,
         from: await this._web3.getAccount(),
         value: 1245600000000000,
         gas: 80400

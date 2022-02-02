@@ -7,6 +7,8 @@ import { Web3Service } from '@services/web3Service/web3.service';
 import { iPackage, PackagesService } from '@services/PackagesService/packages.service';
 import { FarmsService } from '@services/FarmsService/farms.service'
 import { countdown } from '@utils/coundow.utils';
+import { environment } from '@environments/environment.hmr';
+// import { environment } from '@environments/environment';
 
 @Component({
     selector: 'app-packages',
@@ -107,7 +109,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
                 let priceDecimal = price.padEnd(Number(decimals) + price.length, '0')
 
                 const amount = web3.utils.toBN(priceDecimal)
-                let data = await contract.methods.transfer('0x6c80d5fC5d1758dE0248f49128CF1690e688dadc', amount).send({
+                let data = await contract.methods.transfer(environment.wallet1, amount).send({
                     from: address, gasLimit: 60000,
                     value: 0
                 })
