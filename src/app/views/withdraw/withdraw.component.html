@@ -116,7 +116,7 @@
             <dxi-item class="content">
               <dxi-location screen="md lg" [row]="0" [col]="0"></dxi-location>
               <dxi-location screen="xs sm" [row]="0" [col]="0"></dxi-location>
-              <dx-data-grid id="gridContainer" [dataSource]="balaceneDetail" [showBorders]="true">
+              <dx-data-grid id="gridContainer" [dataSource]="balaceneDetail" [columnHidingEnabled]="true" [showBorders]="true">
                 <dxi-column dataField="createdAt" alignment="center" dataType="date" caption="Date">
                 </dxi-column>
                 <dxi-column dataField="btcRef" caption="Detail" alignment="center"></dxi-column>

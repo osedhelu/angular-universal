@@ -26,7 +26,8 @@
 
             </div>
             <div *dxTemplate="let company of 'item'">
-              <dx-data-grid id="gridContainer" [dataSource]="[company]" keyExpr="_id" [showBorders]="true">
+              <dx-data-grid id="gridContainer" [dataSource]="[company]" [columnHidingEnabled]="true" keyExpr="_id"
+                [showBorders]="true">
                 <dxi-column caption="User" cellTemplate="cellTemplate01">
                   <div *dxTemplate="let info of 'cellTemplate01'">
                     {{company.package.user?.username}} <i
@@ -57,10 +58,10 @@
                     " ":"symbol":"1.00": "it"}} yaz
                   </div>
                 </dxi-column>
-                <dxi-column caption="My NFT's" [(visible)]="!!company.typeSponsor" cellTemplate="cellTemplate05">
+                <dxi-column caption="My NFT's" [(visible)]="!company.typeSponsor" cellTemplate="cellTemplate05">
                   <div *dxTemplate="let info of 'cellTemplate05'">
-                    ${{company.iiCinicial | currency:
-                    " ":"symbol":"1.00": "it"}} yaz
+                    ${{company.acountantBalance?.debito | currency:
+                    " ":"symbol":"1.00": "it"}} USDT
                   </div>
                 </dxi-column>
 
@@ -72,7 +73,7 @@
               <br>
 
               <div *ngIf="!!company.bookDaily">
-                <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" keyExpr="_id" [showBorders]="true">
+                <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" [columnHidingEnabled]="true" keyExpr="_id" [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">
                     <div *dxTemplate="let info of 'cellTemplate'">
                       {{info.row.data.transaction?.createdAt | date :'dd/MMM/yyyy'}}

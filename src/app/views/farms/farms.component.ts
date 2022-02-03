@@ -18,6 +18,7 @@ export class FarmsComponent implements OnInit {
     this._service.getNFT().subscribe((resp) => {
       this.product = resp.data[0].package.user._id;
       this.simplePackage = resp.data;
+      console.log(resp)
       this.companies = new DataSource({
         store: {
           data: resp.data,

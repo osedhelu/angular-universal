@@ -121,46 +121,50 @@
             <dxi-item>
               <dxi-location [row]="0" [col]="0" [colspan]="3" screen="lg"></dxi-location>
               <dxi-location [row]="0" [col]="0" [colspan]="2" screen="sm"></dxi-location>
-              <table class="table table-striped" *ngIf="!!ipackageDetail">
-                <thead>
-                  <tr>
-                    <th scope="col">User</th>
-                    <th scope="col" *ngIf="ipackageDetail?.typeSponsor">Referred Type</th>
-                    <th scope="col" *ngIf="ipackageDetail?.iivComision"> Commission Value
-                    <th scope="col" *ngIf="ipackageDetail?.iiCinicial">Initial Payment </th>
-                    <th scope="col" *ngIf="ipackageDetail?.iiDiluida"> diluted</th>
-                    <th scope="col" *ngIf="!ipackageDetail?.typeSponsor"> My NFT's</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{ipackageDetail.package.user?.username}} <i
-                        [class]="'flag-icon flag-icon-'+ipackageDetail.package.user.country?.iso2.toLocaleLowerCase()"></i>
-                    </td>
-                    <td *ngIf="ipackageDetail.typeSponsor">
-                      {{ipackageDetail.typeSponsor}}
-                    </td>
-                    <td *ngIf="ipackageDetail.iivComision">
-                      ${{ipackageDetail.iivComision | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
-                    <td *ngIf="ipackageDetail.iiCinicial">
-                      ${{ipackageDetail.iiCinicial | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
-                    <td *ngIf="ipackageDetail.iiDiluida">
-                      ${{ipackageDetail.iiDiluida | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
+              <dx-data-grid id="gridContainer" [dataSource]="[ipackageDetail]" [columnHidingEnabled]="true"
+                keyExpr="_id" [showBorders]="true">
+                <dxi-column caption="User" cellTemplate="cellTemplate01">
+                  <div *dxTemplate="let info of 'cellTemplate01'">
+                    {{ipackageDetail.package.user?.username}} <i
+                      [class]="'flag-icon flag-icon-'+ipackageDetail.package.user.country?.iso2.toLocaleLowerCase()"></i>
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Referred Type" [(visible)]="!!ipackageDetail.typeSponsor"
+                  cellTemplate="cellTemplate">
+                  <div *dxTemplate="let info of 'cellTemplate'">
+                    {{ipackageDetail.typeSponsor}}
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Commission Value" [(visible)]="!!ipackageDetail.iivComision"
+                  cellTemplate="cellTemplate02">
+                  <div *dxTemplate="let info of 'cellTemplate02'">
+                    ${{ipackageDetail.iivComision | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Initial Payment" [(visible)]="!!ipackageDetail.iiCinicial"
+                  cellTemplate="cellTemplate03">
+                  <div *dxTemplate="let info of 'cellTemplate03'">
+                    ${{ipackageDetail.iiCinicial | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Diluted" [(visible)]="!!ipackageDetail.iiDiluida" cellTemplate="cellTemplate04">
+                  <div *dxTemplate="let info of 'cellTemplate04'">
+                    ${{ipackageDetail.iiDiluida | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="My NFT's" [(visible)]="!ipackageDetail.typeSponsor" cellTemplate="cellTemplate05">
+                  <div *dxTemplate="let info of 'cellTemplate05'">
+                    ${{ipackageDetail.acountantBalance?.debito | currency:
+                    " ":"symbol":"1.00": "it"}} USDT
+                  </div>
+                </dxi-column>
 
-                    <td *ngIf="!ipackageDetail.typeSponsor">
-                      ${{ipackageDetail?.package.Price | currency:
-                      " ":"symbol":"1.00": "it"}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+
+              </dx-data-grid>
             </dxi-item>
             <dxi-item>
               <dxi-location [row]="1" [col]="1" screen="lg"></dxi-location>
@@ -175,8 +179,8 @@
               <dxi-location [row]="2" [col]="0" [colspan]="2" screen="lg"></dxi-location>
               <dxi-location [row]="3" [col]="0" [colspan]="2" screen="sm"></dxi-location>
               <div *ngIf="ipackageDetail.bookDaily">
-                <dx-data-grid id="gridContainer" [dataSource]="ipackageDetail?.bookDaily" keyExpr="_id"
-                  [showBorders]="true">
+                <dx-data-grid id="gridContainer" [columnHidingEnabled]="true" [dataSource]="ipackageDetail?.bookDaily"
+                  keyExpr="_id" [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">
                     <div *dxTemplate="let info of 'cellTemplate'">
                       {{info.row.data.transaction?.createdAt | date :'dd-MMM-yy h:mm:ss a '}}

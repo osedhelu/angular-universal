@@ -30,7 +30,7 @@ export class WithdarwComponent implements OnInit {
     R: 0
   }
   dact: boolean = false
-  popupVisible: boolean = true
+  popupVisible: boolean = false
   balaceneDetail: any[] = []
   widthPage: any = 0
   getSizeQualifier(width) {
