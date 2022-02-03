@@ -15,7 +15,7 @@ export class Web3Service {
     public address: any
     public socketTransaction: any
     public web3 = new Web3(
-        Web3.givenProvider || environment.New_RPC_URL
+        Web3.givenProvider || environment.BINANCE.rpcUrls[0]
 
     );
     currentAccount: any
@@ -28,46 +28,18 @@ export class Web3Service {
         try {
             if (!!ethereum && !!localStorage.getItem('token')) {
                 this.startApp(ethereum); // Initialize your app
-                /**********************************************************/
-                /* Handle chain (network) and chainChanged (per EIP-1193) */
-                /**********************************************************/
-
+                this.selectRed()
                 const chainId = await ethereum.request({ method: 'eth_chainId' });
                 this.handleChainChanged(chainId);
                 ethereum.on('chainChanged', this.handleChainChanged);
-                /***********************************************************/
-                /* Handle user accounts and accountsChanged (per EIP-1193) */
-                /***********************************************************/
                 ethereum
                     .request({ method: 'eth_accounts' })
                     .then(this.handleAccountsChanged)
                     .catch((err) => {
-                        // Some unexpected error.
-                        // For backwards compatibility reasons, if no accounts are available,
-                        // eth_accounts will return an empty array.
-                        console.error(err);
+                        console.error('hola');
                     });
 
-                // Note that this event is emitted on page load.
-                // If the array of accounts is non-empty, you're already
-                // connected.
                 ethereum.on('accountsChanged', this.handleAccountsChanged);
-
-                // For now, 'eth_accounts' will continue to always return an array
-                /*********************************************/
-                /* Access the user's accounts (per EIP-1102) */
-                /*********************************************/
-
-                // You should only attempt to request the user's accounts in response to user
-                // interaction, such as a button click.
-                // Otherwise, you popup-spam the user like it's 1999.
-                // If you fail to retrieve the user's account(s), you should encourage the user
-                // to initiate the attempt.
-                // While you are awaiting the call to eth_requestAccounts, you should disable
-                // any buttons the user can click to initiate the request.
-                // MetaMask will reject any additional requests while the first is still
-                // pending.
-
 
 
             } else {
@@ -194,43 +166,19 @@ export class Web3Service {
 
             const aa = await ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: this.web3.utils.toHex(environment?.ChainID) }],
+                params: [{ chainId: environment.BINANCE.chainId }],
             });
-
-            console.log(aa)
 
             await this.addUSDT()
 
         } catch (err: any) {
             if (err.code === 4902) {
-                const data = [
-                    // {
-                    // chainId: web3.utils.toHex(environment.chainId),
-                    // chainName: 'Binance Smart Chain',
-                    // nativeCurrency: {
-                    // name: 'BNB',
-                    // symbol: 'BNB',
-                    // decimals: 18,
-                    // },
-                    // rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                    // blockExplorerUrls: ['https://bscscan.com/'],
-                    // },
-                    {
-                        chainId: this.web3.utils.toHex(environment.ChainID),
-                        chainName: environment.Network_name,
-                        nativeCurrency: {
-                            name: environment.Symbol,
-                            symbol: environment.Symbol,
-                            decimals: 18,
-                        },
-                        rpcUrls: environment.New_RPC_URL,
-                        blockExplorerUrls: environment.Block_Explorer_URL,
-                    },
-
-                ];
+                // const data = ;
                 await ethereum.request({
                     method: 'wallet_addEthereumChain',
-                    params: data,
+                    params: [
+                        environment.BINANCE
+                    ],
                 });
 
 

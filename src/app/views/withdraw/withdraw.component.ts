@@ -13,7 +13,7 @@ import { Web3Service } from '@services/web3Service/web3.service';
 export class WithdarwComponent implements OnInit {
   ADD_TO_FAVORITES = 'buy this pack';
   REMOVE_FROM_FAVORITES = 'Remove from Favorites';
-  dimencion: number = 660
+  dimencion!: number
   currentHouse: any = {
     Favorite: false,
     Address: 'hola',
@@ -30,11 +30,24 @@ export class WithdarwComponent implements OnInit {
     R: 0
   }
   dact: boolean = false
-  popupVisible: boolean = false
+  popupVisible: boolean = true
   balaceneDetail: any[] = []
-  screen(width): any {
-
-    return (width < 700) ? 'sm' : 'lg';
+  widthPage: any = 0
+  getSizeQualifier(width) {
+    console.log(width)
+    if (width < 640) {
+      // this.dimencion = 400
+      return 'xs';
+    }
+    else if (width < 1280) {
+      // this.dimencion = 33
+      return 'sm';
+    }
+    else if (width < 1920) {
+      // this.dimencion = 333
+      return 'md';
+    }
+    return 'lg';
   }
   constructor(
     private _transaction: TransactionService,
@@ -71,6 +84,17 @@ export class WithdarwComponent implements OnInit {
     }
   }
   getBalanc() {
+    console.log(this.widthPage)
+    if (this.widthPage < 640) {
+      this.dimencion = 400
+    }
+    if (this.widthPage < 1280) {
+      this.dimencion = 700
+    }
+    if (this.widthPage < 1920) {
+      this.dimencion = 1200
+    }
+
     // this.web3.eth.sendTransaction({ to: contractAddress, from: this.state.accounts[0], value: ETHamount });
     this._transaction.getBalance().subscribe((resp: any) => {
       const { disponible, token_value, reservado, ahorro } = resp.data

@@ -5,7 +5,7 @@
       <div class="card card-chart">
         <div class="card-body p-0 m-0">
           <div (click)="showHouse(house)" class="item-content">
-            <img [class]="house?.status?'gris':''" src="{{ house?.img }}" />
+            <img style="width: 100%;" [class]="house?.status?'gris':''" src="{{ house?.img }}" />
             <div class="item-options">
               <div>
                 <div class="address">{{ house?.name }}</div>

@@ -9,6 +9,7 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxAutocompleteModule } from 'devextreme-angular/ui/autocomplete';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
+import { DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
 const routes: Routes = [
     {
         path: 'signup/:id',
@@ -27,7 +28,9 @@ const routes: Routes = [
         DxButtonModule,
         DxFormModule,
         DxAutocompleteModule,
-        DxTextBoxModule
+        DxTextBoxModule,
+        DxValidatorModule,
+        DxValidationSummaryModule,
     ],
 
 })

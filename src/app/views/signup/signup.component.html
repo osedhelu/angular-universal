@@ -71,28 +71,16 @@
                   <dxi-validation-rule type="required" message="Country is required">
                   </dxi-validation-rule>
                 </dxi-item>
-                <dxi-item dataField="Phone" fieldTemplate="phone" [helpText]="">
-                  <div *dxTemplate=" let data of
-                'phone'" class=" input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1">+{{Usuario.country?.phone_code}}</span>
-                    </div>
-                    <dx-text-box style="padding: 0 !important;" class="form-control p0 m0" mask="(X00) 000-0000"
-                      [(value)]="Usuario.Phone" [maskRules]="phoneRules">
-                    </dx-text-box>
-                  </div>
-                  <dxi-validation-rule type="required"
-                    [message]="'Enter the phone number in '+Usuario.country?.name+' phone format'">
+                <dxi-item dataField="Phone" helpText="Enter the phone number in USA phone format"
+                  [editorOptions]="phoneConfig">
+                  <dxi-validation-rule type="required" [message]="'Enter the phone number in  phone format'">
                   </dxi-validation-rule>
-
-
                 </dxi-item>
                 <dxi-item dataField="Password" [editorOptions]="{ mode: 'password' }">
                   <dxi-validation-rule type="required" message="Password is required">
                   </dxi-validation-rule>
                   <dxi-validation-rule type="stringLength" [min]="7"
                     message="the password must have more than 7 characters">
-
                   </dxi-validation-rule>
                 </dxi-item>
                 <dxi-item dataField="password_compare" editorType="dxTextBox" [editorOptions]="{ mode: 'password' }">
@@ -107,11 +95,12 @@
                   </dxi-validation-rule>
                 </dxi-item>
               </dxi-item>
-              <dxi-item itemType="group" cssClass="second-group" [colCount]="1">
-                <dxi-item itemType="button" horizontalAlignment="center" [buttonOptions]="buttonOptions">
-
-                </dxi-item>
+              <!-- <dxi-item itemType="button" horizontalAlignment="left" [buttonOptions]="buttonOptions"> -->
+              <!-- </dxi-item> -->
+              <!-- <dxi-item itemType="group" cssClass="second-group" [colCount]="1"> -->
+              <dxi-item itemType="button" horizontalAlignment="center" [buttonOptions]="buttonOptions">
               </dxi-item>
+              <!-- </dxi-item> -->
             </dx-form>
           </form>
         </div>

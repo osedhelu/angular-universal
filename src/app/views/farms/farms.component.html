@@ -26,46 +26,51 @@
 
             </div>
             <div *dxTemplate="let company of 'item'">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">User</th>
-                    <th scope="col" *ngIf="company.typeSponsor">Referred Type</th>
-                    <th scope="col" *ngIf="company.iivComision"> Commission Value
-                    <th scope="col" *ngIf="company.iiCinicial">Initial Payment </th>
-                    <th scope="col" *ngIf="company.iiDiluida"> diluted</th>
-                    <th scope="col" *ngIf="!company.typeSponsor"> My NFT's</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{company.package.user?.username}} <i
-                        [class]="'flag-icon flag-icon-'+company.package.user.country?.iso2.toLocaleLowerCase()"></i>
-                    </td>
-                    <td *ngIf="company.typeSponsor">
-                      {{company.typeSponsor}}
-                    </td>
-                    <td *ngIf="company.iivComision">
-                      ${{company.iivComision | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
-                    <td *ngIf="company.iiCinicial">
-                      ${{company.iiCinicial | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
-                    <td *ngIf="company.iiDiluida">
-                      ${{company.iiDiluida | currency:
-                      " ":"symbol":"1.00": "it"}} yaz
-                    </td>
+              <dx-data-grid id="gridContainer" [dataSource]="[company]" keyExpr="_id" [showBorders]="true">
+                <dxi-column caption="User" cellTemplate="cellTemplate01">
+                  <div *dxTemplate="let info of 'cellTemplate01'">
+                    {{company.package.user?.username}} <i
+                      [class]="'flag-icon flag-icon-'+company.package.user.country?.iso2.toLocaleLowerCase()"></i>
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Referred Type" [(visible)]="!!company.typeSponsor" cellTemplate="cellTemplate">
+                  <div *dxTemplate="let info of 'cellTemplate'">
+                    {{company.typeSponsor}}
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Commission Value" [(visible)]="!!company.iivComision"
+                  cellTemplate="cellTemplate02">
+                  <div *dxTemplate="let info of 'cellTemplate02'">
+                    ${{company.iivComision | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Initial Payment" [(visible)]="!!company.iiCinicial" cellTemplate="cellTemplate02">
+                  <div *dxTemplate="let info of 'cellTemplate02'">
+                    ${{company.iiCinicial | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="Diluted" [(visible)]="!!company.iiDiluida" cellTemplate="cellTemplate02">
+                  <div *dxTemplate="let info of 'cellTemplate02'">
+                    ${{company.iiDiluida | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
+                <dxi-column caption="My NFT's" [(visible)]="!!company.typeSponsor" cellTemplate="cellTemplate02">
+                  <div *dxTemplate="let info of 'cellTemplate02'">
+                    ${{company.iiCinicial | currency:
+                    " ":"symbol":"1.00": "it"}} yaz
+                  </div>
+                </dxi-column>
 
-                    <td *ngIf="!company.typeSponsor">
-                      ${{company?.package.Price | currency:
-                      " ":"symbol":"1.00": "it"}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+
+              </dx-data-grid>
+              <br>
+              <br>
+              <br>
+
               <div *ngIf="!!company.bookDaily">
                 <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" keyExpr="_id" [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">

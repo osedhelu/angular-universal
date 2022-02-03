@@ -73,19 +73,22 @@ export class SignupComponent implements OnInit {
     Email: '',
     FirstName: '',
     LastName: '',
-    Phone: '',
+    Phone: null,
     Password: '',
     Sponsor: null,
     Username: '',
     country: null,
     password_compare: ''
   }
-  phoneRules: any = {
-    N: /^999/,
-    X: /[02-9]/,
-  }
-  phonePattern: any = /^[02-9]\d{9}$/;
 
+  phoneConfig: any = {
+    mask: `(X00) 000-0000`,
+    maskRules: {
+      N: /^999/,
+      X: /[02-9]/,
+    },
+    maskInvalidMessage: 'The phone must have a correct USA phone format'
+  };
   wallet: any;
   Paises: any[] = []
   searchModeOption = 'startsWith';
@@ -151,14 +154,27 @@ export class SignupComponent implements OnInit {
     this._onFormSubmit = this._onFormSubmit.bind(this)
   }
   async getPaises(): Promise<void> {
+
     this._paises.get().subscribe((resp: any) => {
       this.Paises = resp.data
     })
   }
   keyDown(e) {
     if (e.selectedItem) {
+      let txt: any = ''
       console.log(e.selectedItem)
       this.Usuario.country = e.selectedItem
+      const num: string = e.selectedItem?.phone_code
+      let numS = num.split('');
+      for (let i = 0; i < numS.length; i++) {
+        txt += `,${numS[i]}`
+      }
+
+      txt = txt.replaceAll(',', '\\')
+      this.phoneConfig = {
+        maskInvalidMessage: 'The phone must have a correct ' + e.selectedItem.name + ' phone format',
+        mask: `+${txt} (X00) 000-0009`,
+      }
     }
   }
   // onFormSubmit = function (e) {
@@ -168,7 +184,6 @@ export class SignupComponent implements OnInit {
   async _onFormSubmit(e) {
     try {
       e.preventDefault();
-      const { web3 } = this._web3;
       const User: IUser = {
         email: this.Usuario.Email,
         password: this.Usuario.Password,
@@ -206,13 +221,16 @@ export class SignupComponent implements OnInit {
   asyncValidation(params) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (params?.value.match('@gmail|@hotmail|@yafuz|@admin')) {
+        if (params?.value.match('@gmail|@hotmail|@yafuzgame|@admin')) {
           resolve(true);
         } else {
           reject(false);
         }
       }, 1000);
     });
+  }
+  click(e) {
+    console.log('.......................', e)
   }
 }
 
