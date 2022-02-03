@@ -28,7 +28,6 @@ export class FarmsComponent implements OnInit {
       // this.companies = resp.data
 
       this.MYID = resp.message
-      console.log(resp)
     })
 
   }
@@ -52,7 +51,6 @@ export class FarmsComponent implements OnInit {
       .catch((error) => {
         throw error;
       });
-    console.log('.................', newItem)
 
   }
   ngOnInit() {

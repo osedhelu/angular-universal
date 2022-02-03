@@ -71,7 +71,8 @@
                   <dxi-validation-rule type="required" message="Country is required">
                   </dxi-validation-rule>
                 </dxi-item>
-                <dxi-item dataField="Phone" helpText="Enter the phone number in USA phone format"
+                <dxi-item dataField="Phone"
+                  [helpText]="'Enter the phone number in '+Usuario.country?.name+' phone format'"
                   [editorOptions]="phoneConfig">
                   <dxi-validation-rule type="required" [message]="'Enter the phone number in  phone format'">
                   </dxi-validation-rule>

@@ -11,7 +11,7 @@ import { AlertService, aling, from, status } from '@services/alertService/alert.
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(private router: Router, private _alert: AlertService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("Interception In Progress"); // Interception Stage
+    // _("Interception In Progress"); // Interception Stage
     const token: string = localStorage.getItem('token'); // This retrieves a token from local storage
     req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });// This clones HttpRequest and Authorization header with Bearer token added
     // req = req.clone({ headers: req.headers.set('token-eth', token) });// This clones HttpRequest and Authorization header with Bearer token added
@@ -27,8 +27,10 @@ export class AuthInterceptorService implements HttpInterceptor {
                 this._alert.show(from.bottom, aling.right, status.error, 'debe de registrarte')
                 this.router.navigate(['/signup/nuevo'])
               }
+
+              this._alert.show(from.bottom, aling.right, status.error, error.error?.message)
             }
-            console.log("ERROR 401 UNAUTHORIZED") // in case of an error response the error message is displayed
+            // _("ERROR 401 UNAUTHORIZED") // in case of an error response the error message is displayed
           }
           const err = error.error?.message || error.statusText;
           return throwError(error); // any further errors are returned to frontend                    

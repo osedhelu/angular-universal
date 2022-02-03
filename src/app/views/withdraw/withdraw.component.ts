@@ -34,7 +34,6 @@ export class WithdarwComponent implements OnInit {
   balaceneDetail: any[] = []
   widthPage: any = 0
   getSizeQualifier(width) {
-    console.log(width)
     if (width < 640) {
       // this.dimencion = 400
       return 'xs';
@@ -84,7 +83,6 @@ export class WithdarwComponent implements OnInit {
     }
   }
   getBalanc() {
-    console.log(this.widthPage)
     if (this.widthPage < 640) {
       this.dimencion = 400
     }
@@ -108,7 +106,6 @@ export class WithdarwComponent implements OnInit {
       this.balance.R = reservado
       this.USDTYAZ = token_value
 
-      console.log(this.balance)
 
     })
   }
@@ -116,7 +113,6 @@ export class WithdarwComponent implements OnInit {
     this.popupVisible = true
     this.modaltitle = title
     this._transaction.getBalanceInfo(wallet).subscribe((resp: any) => {
-      console.log('get balance ', resp)
       this.balaceneDetail = resp.data;
       this.dact = true
     })

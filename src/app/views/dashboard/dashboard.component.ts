@@ -42,9 +42,8 @@ export class DashboardComponent implements OnInit {
   }
 
   async getMesesPAckage() {
-
     const aa = await this._package.getPackagaFo()
-    console.log('..........meses...package', aa)
+    console.warn(aa)
   }
 
 }

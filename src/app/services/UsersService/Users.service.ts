@@ -19,7 +19,6 @@ export class UsersService {
     ).toPromise();
   }
   add(data: any) {
-    console.log(data);
     let url = `${URL}/user`;
     return this.http.post(url, data);
   }

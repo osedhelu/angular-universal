@@ -162,7 +162,6 @@ export class SignupComponent implements OnInit {
   keyDown(e) {
     if (e.selectedItem) {
       let txt: any = ''
-      console.log(e.selectedItem)
       this.Usuario.country = e.selectedItem
       const num: string = e.selectedItem?.phone_code
       let numS = num.split('');
@@ -178,7 +177,7 @@ export class SignupComponent implements OnInit {
     }
   }
   // onFormSubmit = function (e) {
-  //   console.log('holllllllllllllllllllllll')
+  //   _('holllllllllllllllllllllll')
   //   e.preventDefault();
   // };
   async _onFormSubmit(e) {
@@ -198,12 +197,10 @@ export class SignupComponent implements OnInit {
         country: this.Usuario.country._id
       }
 
-      console.log(User)
 
 
       this._user.add(User).pipe(catchError((err: any) => {
         const { error } = err
-        console.log('errorr', error)
         this._alert.show(from.bottom, aling.right, status.error, error.message)
         return throwError(e)
 
@@ -214,8 +211,8 @@ export class SignupComponent implements OnInit {
       })
       e.preventDefault();
     } catch (err) {
-      console.log(err)
 
+      console.error(err)
     }
   }
   asyncValidation(params) {
@@ -230,7 +227,7 @@ export class SignupComponent implements OnInit {
     });
   }
   click(e) {
-    console.log('.......................', e)
+    // _('.......................', e)
   }
 }
 

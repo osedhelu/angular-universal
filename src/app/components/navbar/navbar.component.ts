@@ -179,7 +179,7 @@ export class NavbarComponent implements OnInit {
       }
       return titlee;
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
   async ConexionMetamask() {
@@ -192,7 +192,6 @@ export class NavbarComponent implements OnInit {
 
       this._auth.ethToken().subscribe((resp: any) => {
         this._web3.selectRed()
-        console.log(resp)
         localStorage.setItem('token', resp.access_token)
         localStorage.setItem('_id', resp._id)
         localStorage.setItem('user-eth', userLogin)
@@ -207,6 +206,7 @@ export class NavbarComponent implements OnInit {
       })
       this.me()
     } catch (err) {
+      console.error(err)
     }
   }
   async me() {
@@ -222,8 +222,9 @@ export class NavbarComponent implements OnInit {
     this._socket.disconnect()
     await this._auth.deleteSeccion(await this._web3.getAccount())
     this._web3.socketTransaction.unsubscribe(function (error, success) {
-      if (success)
-        console.log('Successfully unsubscribed!');
+      if (success) {
+
+      }
     });
 
   }
@@ -248,11 +249,9 @@ export class NavbarComponent implements OnInit {
     if (isIEorEdge) {
       const data = event.clipboardData || window['clipboardData'];
       const clipboardData = data.getData('text');
-      console.log(clipboardData);
     } else {
       const host = window.location.origin;
       navigator['clipboard'].writeText(`${host}/#/signup/${localStorage.getItem('_id')}`).then((data) => {
-        console.log(window.location)
         this._alert.show(from.bottom, aling.right, status.info, 'link de referido')
       });
     }
@@ -273,7 +272,7 @@ export class NavbarComponent implements OnInit {
         }
       })
       this._socket.on('allUser').subscribe(resp => {
-        console.log('allUser', resp)
+        // _('allUser', resp)
       })
 
       this.login = true
@@ -294,9 +293,9 @@ export class NavbarComponent implements OnInit {
   }
   conect() {
     this._socket.on("connect").subscribe((r: any) => {
-      console.log('conexxxion', r)
+      // _('conexxxion', r)
       this._socket.on('info').subscribe(resp => {
-        console.log('info', resp)
+        // _('info', resp)
         this._alert.show(from.bottom, aling.right, status.success, `Welcome!! ${resp.username}`)
         this._socket.close.emit(true)
         this.username = resp.username

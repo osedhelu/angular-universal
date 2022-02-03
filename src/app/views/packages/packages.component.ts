@@ -64,7 +64,6 @@ export class PackagesComponent implements OnInit, OnDestroy {
     }
     async showHouse(packageo: iPackage) {
         try {
-            console.log(packageo)
             if (packageo.status) {
                 this._alert.show(from.bottom, aling.right, status.info, 'Este paquete ya fue vendido')
                 return
@@ -76,7 +75,6 @@ export class PackagesComponent implements OnInit, OnDestroy {
             } else {
                 this.currentHouse = packageo;
                 const infoVenta = await this._venta.getVentasToPackage(packageo?._id)
-                console.log(infoVenta)
                 const { bookDaily } = infoVenta.data
                 for (let i = 0; i < bookDaily.length; i++) {
                     const daily = bookDaily[i]
@@ -90,7 +88,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
                 this.popupFram = true
             }
         } catch (e) {
-            console.log('line: 60', e)
+            console.error(e)
         }
 
     }
@@ -139,14 +137,13 @@ export class PackagesComponent implements OnInit, OnDestroy {
             // 2000);
 
         } catch (err) {
-            console.log('holaaaa', err)
+            console.error(err)
             if (err.code === 4001) {
                 this.popupVisible = false
             }
         }
     }
     recorerTime(fecha: Date) {
-        console.log(fecha)
         if (this.callback) {
             clearInterval(this.callback)
         }

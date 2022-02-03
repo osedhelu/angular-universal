@@ -14,7 +14,6 @@ export class SocketService {
   @Output() close: EventEmitter<any> = new EventEmitter();
   // public menuActive: boolean = false
   constructor(private _alert: AlertService, private router: Router) {
-    console.log('.........................', URL_SOCKET)
     if (!!localStorage.getItem('token')) {
       this.initConecion()
     }

@@ -12,6 +12,5 @@ export class PageNotFoundComponent implements OnInit {
 
   refir() {
 
-    console.log('hola')
   }
 }

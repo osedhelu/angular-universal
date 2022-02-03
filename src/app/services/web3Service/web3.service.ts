@@ -43,10 +43,11 @@ export class Web3Service {
 
 
             } else {
-                console.log('Please install MetaMask!');
+                // _('Please install MetaMask!');
             }
         } catch (err) {
-            log("error", err)
+            console.error(err)
+            // log("error", err)
         }
 
     }
@@ -54,7 +55,7 @@ export class Web3Service {
     async handleAccountsChanged(accounts) {
         if (accounts.length === 0) {
             // MetaMask is locked or the user has not connected any accounts
-            console.log('Please connect to MetaMask.');
+            // _('Please connect to MetaMask.');
         } else if (accounts[0] !== this.currentAccount) {
             this.currentAccount = accounts[0];
             ethereum.request({ method: 'eth_chainId' }).then(resp => {
@@ -79,7 +80,7 @@ export class Web3Service {
                 if (err.code === 4001) {
                     // EIP-1193 userRejectedRequest error
                     // If this happens, the user rejected the connection request.
-                    console.log('Please connect to MetaMask.');
+                    // _('Please connect to MetaMask.');
                 } else {
                     console.error(err);
                 }
@@ -97,21 +98,20 @@ export class Web3Service {
         }, function (error: any, event: any) {
         })
             .on("connected", function (subscriptionId: any) {
-                console.log(`event conexion ${subscriptionId}`);
             })
             .on('data', async (event) => {
                 try {
                     this.updateBalance(await this.getAccount())
                     this.transaction.emit(JSON.stringify(event.returnValues))
                 } catch (err) {
-                    console.log(err)
+                    console.error(err)
                 }
             })
             .on('changed', function (event: any) {
-                console.log('changed', event.transactionHash); // same results as the optional callback above
+                // _('changed', event.transactionHash); // same results as the optional callback above
             })
             .on('error', function (error: any, receipt: any) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
-                console.log(error)
+                // _(error)
             });
     }
     handleChainChanged(_chainId) {
@@ -135,7 +135,7 @@ export class Web3Service {
         // Access the decentralized web!
     }
     emotEvent(e) {
-        console.log('capturar data', e)
+        // _('capturar data', e)
     }
     isConnected() {
         return ethereum.isConnected()
@@ -204,7 +204,7 @@ export class Web3Service {
                 .then((success) => {
                     if (success) {
                         localStorage.setItem('TOKEN_USDT', 'true')
-                        console.log('USDT successfully added to wallet!');
+                        // _('USDT successfully added to wallet!');
                     } else {
                         throw new Error('Something went wrong.');
                     }
@@ -227,7 +227,7 @@ export class Web3Service {
                 }).then((success) => {
                     if (success) {
                         localStorage.setItem('TOKEN_YAZ1', 'true')
-                        console.log('add token YAZ')
+                        // _('add token YAZ')
                     } else {
                         throw new Error('Something went wrong.');
                     }
@@ -239,7 +239,7 @@ export class Web3Service {
         const _Contract = await this.getContract()
         const balance = await _Contract.methods.balanceOf(address).call()
         this.balance = this.web3.utils.fromWei(balance, "ether")
-        console.log('.................>>>>>', balance)
+        // _('.................>>>>>', balance)
 
     }
 }

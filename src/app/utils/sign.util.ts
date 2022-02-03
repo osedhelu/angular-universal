@@ -21,7 +21,6 @@ export const eth_sign = async (signer, expires_in = '1d', body = {}) => {
 
   if (typeof signer === 'function') {
     var signature = await signer(msg);
-    console.log(signature);
   } else {
     throw new Error(
       '"signer" argument should be a function that returns a signature eg: "msg => web3.eth.personal.sign(msg, <YOUR_ADDRESS>)"'

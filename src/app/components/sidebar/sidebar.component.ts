@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.menuItems = ROUTESdefaul
     this._s.close.subscribe((event) => {
-      console.log("service sockert sidebar", event)
+      // _("service sockert sidebar", event)
       if (event) {
         this.menuItems = ROUTES.filter((menuItem) => menuItem)
       } else {

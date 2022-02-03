@@ -14,7 +14,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'packages',
-                loadChildren: () => import("./packages/packages.module").then((m) => m.PackagesModule).catch(e => console.log(e)),
+                loadChildren: () => import("./packages/packages.module").then((m) => m.PackagesModule)
             },
             {
                 path: '',

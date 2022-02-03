@@ -14,10 +14,9 @@ export class InvoiceComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params); // { order: "popular" }
 
         // this.order = params.order;
-        // console.log(this.order); // popular
+        // _(this.order); // popular
       }
       );
   }
