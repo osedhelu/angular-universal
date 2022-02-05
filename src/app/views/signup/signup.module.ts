@@ -14,7 +14,7 @@ const routes: Routes = [
     {
         path: 'signup/:id',
         component: SignupComponent,
-        canActivate: [MetamaskGuard],
+        canActivate: [],
     }
 ];
 @NgModule({

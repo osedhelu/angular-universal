@@ -13,17 +13,17 @@ export class ArchitectureInfo {
 }
 export class DataItem {
     country: string;
-
     commodity: string;
-
     total: number;
+    itotal: number
 }
 const data: DataItem[] = [
-    { country: 'pack', commodity: 'Nuclear', total: 84634 },
-    { country: 'pack', commodity: 'Thermal', total: 419591 },
-    { country: 'pack', commodity: 'Wind', total: 78598 },
-    { country: 'pack', commodity: 'Solar', total: 38098 },
-    { country: 'ventas', commodity: 'Solar', total: 38098 },
+    { country: 'PACK 1', commodity: 'Available', total: 970, itotal: 1000 },
+    { country: 'PACK 1', commodity: 'Sold', total: 30, itotal: 1000 },
+    { country: 'PACK 2', commodity: 'Available', total: 490, itotal: 500 },
+    { country: 'PACK 2', commodity: 'Sold', total: 10, itotal: 500 },
+    { country: 'PACK 3', commodity: 'Available', total: 76, itotal: 300 },
+    { country: 'PACK 3', commodity: 'Sold', total: 24, itotal: 300 },
 
 ];
 
@@ -58,7 +58,7 @@ const architecturesInfo: ArchitectureInfo[] = [{
     pack1: 0,
     pack2: 0,
     pack3: 0,
-    pack4: 30,
+    pack4: 0,
 }, {
     mes: 'junio',
     pack1: 0,

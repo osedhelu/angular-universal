@@ -242,4 +242,7 @@ export class Web3Service {
         // _('.................>>>>>', balance)
 
     }
+    async disconextion() {
+        ethereum.close()
+    }
 }

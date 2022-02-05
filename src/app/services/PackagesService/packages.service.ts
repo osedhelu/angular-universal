@@ -51,7 +51,7 @@ export class PackagesService {
   }
   getPackagaFo() {
     let url = `${URL}/package/meses`;
-    return this.http.get(url).toPromise()
+    return this.http.post(url, null)
   }
 
 }

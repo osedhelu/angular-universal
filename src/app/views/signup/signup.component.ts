@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
@@ -6,8 +6,8 @@ import { UsersService } from '@services/UsersService/Users.service';
 import { Web3Service } from '@services/web3Service/web3.service';
 import { PaisesService } from '@services/PaisesService/paises.service';
 import { DxFormComponent } from 'devextreme-angular/ui/form';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
 
 export interface IUser {
   email: string;
@@ -66,7 +66,7 @@ const sendRequest = (value: string) => {
   templateUrl: './signup.component.html',
   styleUrls: ["./signup.component.css"]
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   @ViewChild(DxFormComponent, { static: false }) form: DxFormComponent;
   Usuario: inUser = {
     wallet: '',
@@ -102,6 +102,8 @@ export class SignupComponent implements OnInit {
     useSubmitBehavior: true,
   };
 
+  private _unsubscribeAll!: Subject<any>
+  private un: any
   states: string[];
   dijitoTele: any = ''
   constructor(
@@ -112,7 +114,10 @@ export class SignupComponent implements OnInit {
     private _alert: AlertService,
     private router: Router
 
-  ) { }
+  ) {
+    this._unsubscribeAll = new Subject();
+    this.un = takeUntil(this._unsubscribeAll);
+  }
   passwordComparison = () => this.form.instance.option('formData').Password;
   sonIguales(campo1: string, campo2: string) {
     return (group: FormGroup) => {
@@ -128,7 +133,7 @@ export class SignupComponent implements OnInit {
   }
   ngOnInit() {
     this.getPaises()
-    this.activateRouter.params.subscribe((resp: any) => {
+    this.activateRouter.params.pipe(this.un).subscribe((resp: any) => {
       this.Usuario.Sponsor = resp.id
       if (!!localStorage.getItem('sponsor')) {
         this._user.getInfoUser(localStorage.getItem('sponsor')).then((e) => {
@@ -154,8 +159,7 @@ export class SignupComponent implements OnInit {
     this._onFormSubmit = this._onFormSubmit.bind(this)
   }
   async getPaises(): Promise<void> {
-
-    this._paises.get().subscribe((resp: any) => {
+    this._paises.get().pipe(this.un).subscribe((resp: any) => {
       this.Paises = resp.data
     })
   }
@@ -204,7 +208,7 @@ export class SignupComponent implements OnInit {
         this._alert.show(from.bottom, aling.right, status.error, error.message)
         return throwError(e)
 
-      })).subscribe(resp => {
+      })).pipe(this.un).subscribe(resp => {
         localStorage.removeItem('sponsor')
         this._alert.show(from.bottom, aling.right, status.success, `Welcome to yafuzgame: ${User.username}`)
         this.router.navigate(['/packages'])
@@ -228,6 +232,11 @@ export class SignupComponent implements OnInit {
   }
   click(e) {
     // _('.......................', e)
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+    this._unsubscribeAll.unsubscribe()
   }
 }
 

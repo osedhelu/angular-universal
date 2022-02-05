@@ -60,6 +60,7 @@
                   <div id="Group_1">
                     <div id="Group_2">
                       <svg class="Intersection_2" viewBox="-1.282 0 2943.171 2950.455">
+
                         <path id="Intersection_2"
                           d="M 1603.108276367188 2698.476806640625 L 88.61995697021484 760.0208129882813 C -55.54817199707031 575.4921875 -22.83098411560059 309.0321044921875 161.6963958740234 164.8627319335938 L 372.711181640625 0 L 2858.888916015625 0 L 2858.888916015625 2255.417724609375 L 2198.26513671875 2771.55322265625 C 2120.766845703125 2832.101318359375 2028.790161132813 2861.449462890625 1937.516845703125 2861.455078125 C 1811.4638671875 2861.462890625 1686.728271484375 2805.505859375 1603.108276367188 2698.476806640625 Z">
                         </path>
@@ -68,12 +69,20 @@
                         <path id="Intersection_1"
                           d="M 2736.0478515625 2862.99951171875 L 361.9617919921875 1951.673095703125 C 154.1310729980469 1871.893920898438 20.12044143676758 1683.259033203125 0 1475.787231445313 L 0 1366.811401367188 C 4.841856002807617 1316.94384765625 16.4133358001709 1266.894653320313 35.24119567871094 1217.845825195313 L 502.7287902832031 0 L 2862.99951171875 0 L 2862.99951171875 2862.99951171875 L 2736.0478515625 2862.99951171875 Z">
                         </path>
+                        <foreignObject x="2%" y="31%" width="500" height="500">
+                          <button ngbTooltip="log out" (click)="exit()" style="
+    width: 500px;
+    height: 500px;
+    border-radius: 200px;
+" class="btn btn-link btn-ms p-1"><i style="font-size: 300px; color: #000;"
+                              class="now-ui-icons media-1_button-power"></i></button>
+                        </foreignObject>
                       </svg>
                     </div>
                     <div id="text_ahorro">
-                      <span></span><br /><span class="p-ahorro">A: ${{balance?.ahorro| currency:
+                      <span></span><br /><span class="p-ahorro">S: ${{balance?.ahorro| currency:
                         " ":"symbol":"1.00":"it"}} USDT</span>
-                      <span></span><br /><span class="p-ahorro">D: ${{ balance?.disponible| currency:
+                      <span></span><br /><span class="p-ahorro">A: ${{ balance?.disponible| currency:
                         " ":"symbol":"1.00":"it"}} YAZ</span>
                       <span></span><br /><span class="p-ahorro">R: ${{balance?.reservado | currency:
                         " ":"symbol":"1.00":"it"}} YAZ</span>
@@ -88,9 +97,7 @@
                 </div>
                 <div class="d-md-block">
 
-                  <button (click)="exit()" class="btn-recargas btn btn-sm btn-danger">
-                    exit
-                  </button>
+
                   <!-- <div *ngIf="submitted && f.name_uniqued.errors">
                     <div class="text-danger" *ngIf="f.name_uniqued.errors.required">
                       Por favor, ingresa una usuario personal valida
@@ -108,6 +115,7 @@
           <a class="nav-link " (click)="ConexionMetamask()">
             <i class="pr-2">
               <svg xmlns="http://www.w2.org/2000/svg" width="20" height="20" viewBox="0 0 212 189">
+
                 <g fill="none" fill-rule="evenodd">
                   <polygon fill="#CDBDB2"
                     points="60.75 173.25 88.313 180.563 88.313 171 90.563 168.75 106.313 168.75 106.313 180 106.313 187.875 89.438 187.875 68.625 178.875" />

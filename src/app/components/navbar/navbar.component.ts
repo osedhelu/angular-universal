@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
@@ -9,6 +9,9 @@ import { SocketService } from '@services/SocketService/socket.service';
 import { Web3Service } from '@services/web3Service/web3.service';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
 import { TransactionService } from '@services/transaction/transaction.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { copyText } from '@utils/copy.utils';
 declare const window: any;
 const { ethereum } = window;
 
@@ -18,7 +21,9 @@ const { ethereum } = window;
   styleUrls: ['./navbar.component.css'],
 })
 
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+  private _unsubscribeAll: any;
+  private un: any
   private listTitles: any[];
   public balance: {
     ahorro: number,
@@ -42,7 +47,8 @@ export class NavbarComponent implements OnInit {
     private element: ElementRef, private router: Router, public _web3: Web3Service, private _auth: AuthService,
     private _transctionService: TransactionService,
     private _alert: AlertService) {
-
+    this._unsubscribeAll = new Subject();
+    this.un = takeUntil(this._unsubscribeAll);
     this.location = location;
     this.sidebarVisible = false;
   }
@@ -51,7 +57,7 @@ export class NavbarComponent implements OnInit {
     const navbar: HTMLElement = this.element.nativeElement;
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-    this.router.events.subscribe((event: any) => {
+    this.router.events.pipe(this.un).subscribe((event: any) => {
       this.sidebarClose();
       var $layer: any = document.getElementsByClassName('close-layer')[0];
       if ($layer) {
@@ -190,7 +196,7 @@ export class NavbarComponent implements OnInit {
       const token = await this._web3.getToken(account)
       localStorage.setItem('eth-token', token)
 
-      this._auth.ethToken().subscribe((resp: any) => {
+      this._auth.ethToken().pipe(this.un).subscribe((resp: any) => {
         this._web3.selectRed()
         localStorage.setItem('token', resp.access_token)
         localStorage.setItem('_id', resp._id)
@@ -221,7 +227,7 @@ export class NavbarComponent implements OnInit {
     this.login = false
     this._socket.disconnect()
     await this._auth.deleteSeccion(await this._web3.getAccount())
-    this._web3.socketTransaction.unsubscribe(function (error, success) {
+    this._web3.socketTransaction.pipe(this.un).subscribe(function (error, success) {
       if (success) {
 
       }
@@ -230,7 +236,7 @@ export class NavbarComponent implements OnInit {
   }
   async getBalance() {
     this._web3.updateBalance(await this._web3.getAccount())
-    this._transctionService.getBalance().subscribe((resp: any) => {
+    this._transctionService.getBalance().pipe(this.un).subscribe((resp: any) => {
       this.balance = {
         ahorro: resp.data.ahorro,
         disponible: resp.data.disponible,
@@ -243,35 +249,28 @@ export class NavbarComponent implements OnInit {
   }
 
   getUrlAfiliado(event: any): void {
-    const isIEorEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
-    const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    copyText(localStorage.getItem('_id'))
+    this._alert.show(from.bottom, aling.right, status.info, 'Copied Link')
 
-    if (isIEorEdge) {
-      const data = event.clipboardData || window['clipboardData'];
-      const clipboardData = data.getData('text');
-    } else {
-      const host = window.location.origin;
-      navigator['clipboard'].writeText(`${host}/#/signup/${localStorage.getItem('_id')}`).then((data) => {
-        this._alert.show(from.bottom, aling.right, status.info, 'link de referido')
-      });
-    }
   }
   activeSocket() {
     if (!!localStorage.getItem('user-eth')) {
       this.userLogin = localStorage.getItem('user-eth')
       this.me()
-      this._socket.on('error').subscribe((e) => {
+      this._socket.on('error').pipe(this.un).subscribe((e: any) => {
         if (!e.ok) {
-          this._alert.show(from.bottom, aling.right, status.error, 'actualiza la seccion')
           localStorage.removeItem('token')
           localStorage.removeItem('eth-token')
           localStorage.removeItem('user-eth')
           this.router.navigate(['/packages'])
           this._socket.disconnect()
           this.login = false
+          this._socket.update.emit(true)
+
+          this._alert.show(from.bottom, aling.right, status.error, 'expired token you must start section again')
         }
       })
-      this._socket.on('allUser').subscribe(resp => {
+      this._socket.on('allUser').pipe(this.un).subscribe(resp => {
         // _('allUser', resp)
       })
 
@@ -283,7 +282,7 @@ export class NavbarComponent implements OnInit {
     this.disconext()
   }
   disconext() {
-    this._socket.on("disconnect").subscribe(() => {
+    this._socket.on("disconnect").pipe(this.un).subscribe(() => {
       this._alert.show(from.bottom, aling.right, status.error, 'Goodbye!! we will not see soon')
       this._socket.reconnect()
       this.activeSocket()
@@ -292,14 +291,19 @@ export class NavbarComponent implements OnInit {
     });
   }
   conect() {
-    this._socket.on("connect").subscribe((r: any) => {
+    this._socket.on("connect").pipe(this.un).subscribe((r: any) => {
       // _('conexxxion', r)
-      this._socket.on('info').subscribe(resp => {
+      this._socket.on('info').pipe(this.un).subscribe((resp: any) => {
         // _('info', resp)
         this._alert.show(from.bottom, aling.right, status.success, `Welcome!! ${resp.username}`)
         this._socket.close.emit(true)
         this.username = resp.username
       })
     });
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+    this._unsubscribeAll.unsubscribe();
   }
 }

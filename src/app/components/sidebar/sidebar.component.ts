@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { SocketService } from '@services/SocketService/socket.service'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 
 declare interface RouteInfo {
   path: string
@@ -33,14 +35,19 @@ export const ROUTESdefaul: RouteInfo[] = [
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: any[]
+  _unsubscribeAll!: Subject<any>
+  un: any
+  constructor(private _s: SocketService) {
 
-  constructor(private _s: SocketService) { }
+    this._unsubscribeAll = new Subject();
+    this.un = takeUntil(this._unsubscribeAll);
+  }
 
   ngOnInit() {
     this.menuItems = ROUTESdefaul
-    this._s.close.subscribe((event) => {
+    this._s.close.pipe(this.un).subscribe((event) => {
       // _("service sockert sidebar", event)
       if (event) {
         this.menuItems = ROUTES.filter((menuItem) => menuItem)
@@ -54,5 +61,10 @@ export class SidebarComponent implements OnInit {
       return false
     }
     return true
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next()
+    this._unsubscribeAll.complete()
+    this._unsubscribeAll.unsubscribe()
   }
 }

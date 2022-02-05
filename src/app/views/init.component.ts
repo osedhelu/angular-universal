@@ -1,10 +1,10 @@
-import { filter } from 'rxjs/operators';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
 
 import { NavbarComponent } from '@components/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { SocketService } from '@services/SocketService/socket.service';
 
@@ -12,12 +12,17 @@ import { SocketService } from '@services/SocketService/socket.service';
     selector: 'app-init',
     templateUrl: './init.component.html',
 })
-export class InitComponent implements OnInit {
+export class InitComponent implements OnInit, OnDestroy {
     private _router: Subscription;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
+    _unsubscribeAll!: Subject<any>
+    un: any
+    constructor(public location: Location, private router: Router, private socker: SocketService) {
 
-    constructor(public location: Location, private router: Router, private socker: SocketService) { }
+        this._unsubscribeAll = new Subject();
+        this.un = takeUntil(this._unsubscribeAll);
+    }
 
     ngOnInit() {
         const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
@@ -35,7 +40,7 @@ export class InitComponent implements OnInit {
         this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
-        this.router.events.subscribe((event: any) => {
+        this.router.events.pipe(this.un).subscribe((event: any) => {
             if (event instanceof NavigationStart) {
                 if (event.url != this.lastPoppedUrl)
                     this.yScrollStack.push(window.scrollY);
@@ -47,7 +52,7 @@ export class InitComponent implements OnInit {
                     window.scrollTo(0, 0);
             }
         });
-        this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+        this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).pipe(this.un).subscribe((event: NavigationEnd) => {
             elemMainPanel.scrollTop = 0;
             elemSidebar.scrollTop = 0;
         });
@@ -84,4 +89,9 @@ export class InitComponent implements OnInit {
         return bool;
     }
 
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next()
+        this._unsubscribeAll.complete()
+        this._unsubscribeAll.unsubscribe()
+    }
 }

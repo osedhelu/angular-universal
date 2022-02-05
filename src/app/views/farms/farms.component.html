@@ -73,7 +73,8 @@
               <br>
 
               <div *ngIf="!!company.bookDaily">
-                <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" [columnHidingEnabled]="true" keyExpr="_id" [showBorders]="true">
+                <dx-data-grid id="gridContainer" [dataSource]="company.bookDaily" [columnHidingEnabled]="true"
+                  keyExpr="_id" [showBorders]="true">
                   <dxi-column caption="Dia" cellTemplate="cellTemplate">
                     <div *dxTemplate="let info of 'cellTemplate'">
                       {{info.row.data.transaction?.createdAt | date :'dd/MMM/yyyy'}}
@@ -105,7 +106,10 @@
 
         </div>
         <div *ngIf="!companies">
-          <div class="d-flex justify-content-center">
+          <div *ngIf="Databoolen">
+            You do not record buys or sales
+          </div>
+          <div *ngIf="!Databoolen" class="d-flex justify-content-center">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
             </div>

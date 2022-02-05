@@ -8,6 +8,8 @@ import { iPackage, PackagesService } from '@services/PackagesService/packages.se
 import { FarmsService } from '@services/FarmsService/farms.service'
 import { countdown } from '@utils/coundow.utils';
 import { environment } from '@environments/environment.hmr';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 // import { environment } from '@environments/environment';
 
 @Component({
@@ -16,6 +18,8 @@ import { environment } from '@environments/environment.hmr';
     styleUrls: ['./packages.component.scss'],
 })
 export class PackagesComponent implements OnInit, OnDestroy {
+    _unsubscribeAll: any;
+    un: any
     houses: iPackage[];
     data: any[] = []
     currentHouse: iPackage;
@@ -44,6 +48,8 @@ export class PackagesComponent implements OnInit, OnDestroy {
         private _venta: FarmsService,
         private _alert: AlertService, private _web3: Web3Service, private _tran: TransactionService, private _auth: AuthService, private router: Router) {
         this.screen = this.screen.bind(this)
+        this._unsubscribeAll = new Subject();
+        this.un = takeUntil(this._unsubscribeAll);
     }
 
 
@@ -54,7 +60,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
         this.getPack()
     }
     getPack() {
-        this._package.get().subscribe((resp: any) => {
+        this._package.get().pipe(this.un).subscribe((resp: any) => {
             this.data = resp.data
             this.houses = resp.data
 
@@ -116,7 +122,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
                 this.popupVisible = false
                 this.getPack()
 
-                this._alert.show(from.top, aling.center, status.success, 'Listo')
+                this._alert.show(from.top, aling.center, status.success, 'Successful Purchase')
             } else {
                 this.popupVisible = false
                 // notify('inicia seccion primero')
@@ -158,6 +164,9 @@ export class PackagesComponent implements OnInit, OnDestroy {
         if (this.callback) {
             clearInterval(this.callback)
         }
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+        this._unsubscribeAll.unsubscribe();
 
     }
 }

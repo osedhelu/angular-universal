@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FarmsService } from '@services/FarmsService/farms.service';
 import DataSource from 'devextreme/data/data_source';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { venta } from './farm.service';
 
 @Component({
@@ -8,14 +10,20 @@ import { venta } from './farm.service';
   templateUrl: './farms.component.html',
   styleUrls: ['./farms.component.css']
 })
-export class FarmsComponent implements OnInit {
+export class FarmsComponent implements OnInit, OnDestroy {
   companies: DataSource
-  // directo!: string;
+  Databoolen: boolean = false // directo!: string;
+  private _unsubscribeAll!: Subject<any>
+  private un: any
   MYID!: string
   product: any
   simplePackage: any[] = []
   constructor(private _service: FarmsService) {
-    this._service.getNFT().subscribe((resp) => {
+
+    this._unsubscribeAll = new Subject();
+    this.un = takeUntil(this._unsubscribeAll);
+    this._service.getNFT().pipe(this.un).subscribe((resp: any) => {
+      this.Databoolen = true
       this.product = resp.data[0].package.user._id;
       this.simplePackage = resp.data;
       console.log(resp)
@@ -57,4 +65,9 @@ export class FarmsComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+    this._unsubscribeAll.unsubscribe()
+  }
 }

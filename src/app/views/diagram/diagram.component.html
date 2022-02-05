@@ -23,9 +23,15 @@
 
                 </i>
               </foreignObject>
-              <text class="template-button" x="50%" y="85%" style="cursor: pointer;" (click)="showInfo(item.dataItem)">
-                Show Details
-              </text>
+
+              <foreignObject x="32%" y="64%" width="65" height="36">
+
+                <button (click)="showInfo(item.dataItem)" class="btn btn-primary btn-ms p-1">Show Detail</button>
+              </foreignObject>
+              <!-- <text class="template-button" style="cursor: pointer; background: blue;" -->
+              <!-- (click)="showInfo(item.dataItem)"> -->
+              <!-- Show Details -->
+              <!-- </text> -->
             </svg>
             <dxo-nodes [dataSource]="dataSource" keyExpr="_id" [typeExpr]="itemTypeExpr" parentKeyExpr="patrocinador">
               <dxo-auto-layout type="tree"></dxo-auto-layout>
@@ -41,7 +47,8 @@
               <p>Username: <b>{{ currentEmployee.username }}</b></p>
               <p>Email: <b>{{ currentEmployee.email }}</b></p>
               <p>Phone: <b> + {{currentEmployee.country.phone_code}} {{ currentEmployee.celular }}</b></p>
-              <p>My ID: <b> {{currentEmployee._id}}</b></p>
+              <p>Id: <b> <button type="button" (click)="getLink(currentEmployee._id)"
+                    class="btn btn-link btn-ms p-2 m-0">Link</button></b></p>
             </div>
           </dx-popup>
 
