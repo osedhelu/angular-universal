@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     // this.architecturesInfo = service.getArchitecturesInfo();
   }
   customizeLabel(e) {
-    return `${e.argumentText}\n${e.valueText}`;
+    return `${e.argumentText}\n${e.valueText}%`;
   }
 
   calculateTotal(pieChart) {
@@ -42,9 +42,7 @@ export class DashboardComponent implements OnInit {
   getTOtal() {
     return this.pipe.transform(this.totalRecaudar, '1.00');
   }
-  getImagePath(country) {
-    return `images/flags/${country.replace(/\s/, '').toLowerCase()}.svg`;
-  }
+
   ngOnInit() {
     this.getMesesPAckage()
 

@@ -18,12 +18,12 @@ export class DataItem {
     itotal: number
 }
 const data: DataItem[] = [
-    { country: 'PACK 1', commodity: 'Available', total: 970, itotal: 1000 },
-    { country: 'PACK 1', commodity: 'Sold', total: 30, itotal: 1000 },
-    { country: 'PACK 2', commodity: 'Available', total: 490, itotal: 500 },
-    { country: 'PACK 2', commodity: 'Sold', total: 10, itotal: 500 },
-    { country: 'PACK 3', commodity: 'Available', total: 76, itotal: 300 },
-    { country: 'PACK 3', commodity: 'Sold', total: 24, itotal: 300 },
+    { country: 'PACK 1', commodity: 'Available', total: 99.3, itotal: 1000 },
+    { country: 'PACK 1', commodity: 'Sold', total: 0.7, itotal: 1000 },
+    { country: 'PACK 2', commodity: 'Available', total: 99, itotal: 500 },
+    { country: 'PACK 2', commodity: 'Sold', total: 1, itotal: 500 },
+    { country: 'PACK 3', commodity: 'Available', total: 99.6, itotal: 250 },
+    { country: 'PACK 3', commodity: 'Sold', total: 0.4, itotal: 250 },
 
 ];
 

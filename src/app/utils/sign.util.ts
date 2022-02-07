@@ -12,7 +12,7 @@ export const eth_sign = async (signer, expires_in = '1d', body = {}) => {
   validateInput(body);
 
   const data = {
-    'MegaCiclon-Version': 1,
+    'YAFUZGAME-Version': 1,
     'Expire-Date': expires_in_date,
     ...body,
   };
