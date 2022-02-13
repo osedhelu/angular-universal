@@ -24,7 +24,9 @@
               </foreignObject>
 
               <foreignObject x="90%" y="5%" width="30" height="24">
-                <div [ngClass]="item.dataItem.userVentas.length===0?'txdanger':'txsuccess'" id="circulo"></div>
+                <div *ngIf="item.dataItem?.userVentas">
+                  <div [ngClass]="item.dataItem?.userVentas.length===0?'txdanger':'txsuccess'" id="circulo"></div>
+                </div>
               </foreignObject>
               <foreignObject x="32%" y="64%" width="65" height="36">
                 <button (click)="showInfo(item.dataItem)" class="btn btn-primary btn-ms p-1">Show Detail</button>
