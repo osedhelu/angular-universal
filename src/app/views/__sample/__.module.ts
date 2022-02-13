@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@services/guard/auth.guard';
 import { MetamaskGuard } from '@services/guard/authMetamask.guard';
+import { __Service } from './_.service';
 import { __Component } from './__.component';
 const routes: Routes = [
     {
@@ -16,8 +17,11 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
     ],
+    providers: [
+        __Service
+    ]
 
 })
 
-export class DashboardModule { }
+export class __Module { }
 

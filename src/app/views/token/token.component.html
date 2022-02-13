@@ -1,0 +1,86 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4" *ngFor="let token of tokens">
+      <div class="card card-chart">
+        <div class="card-body p-0 m-0">
+          <div (click)="descriptionToken(token)" class="item-content">
+            <img style="width: 100%;" [class]="token?.status?'gris':''" src="{{ token?.img }}" />
+            <div class="item-options">
+              <div>
+                <div class="address">{{ token?.name }}</div>
+                <div class="price large-text">
+                  ${{ token.price | currency: " ":"symbol":".00":"it" }}
+                </div>
+                <div class="agent" *ngIf="token.active">
+                  <div id="house{{ token.id }}">
+                    <i class="now-ui-icons yafuz-success"></i>
+                  </div>
+                </div>
+                <div class="agent" *ngIf="token.status">
+                  <div id="house{{ token.id}}">
+                    <i class="line">vendido</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <dx-popover target="#token{{ currentToken.id }}" showEvent="mouseenter" [(visible)]="popupVisible"
+              hideEvent="mouseleave" contentTemplate="popoverContent" [width]="260">
+              <dxo-position at="bottom" my="top" offset="0 2" collision="fit flip">
+              </dxo-position>
+              <div *dxTemplate="let data of 'popoverContent'">
+                <div class="agent-details">
+                  <img src="{{ currentToken.Picture }}" />
+                  <div>
+                    <div class="name large-text">{{ currentToken.Name }}</div>
+                    <div class="phone">Tel: {{ currentToken.Phone }}</div>
+                  </div>
+                </div>
+              </div>
+            </dx-popover> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <dx-popup [showTitle]="true" [width]="dimencion" [title]="currentToken?.name" [dragEnabled]="false"
+      [closeOnOutsideClick]="true" [(visible)]="popupVisible">
+
+      <div *dxTemplate="let data of 'content'">
+
+        <div class="row">
+
+          <div class="col-6 mb-4">
+            <div class="opacity">{{ currentToken?.name }}
+              <br> <b>Total YAZ: </b> ${{ currentToken?.priceYAZ | currency: " ":"symbol":"1.00": "it"}}
+              <!-- <br> <b>Commission: </b> {{ currentToken.commission | currency: " ":"symbol":"1.00": "it"}} -->
+            </div>
+          </div>
+          <div class="col-6 mb-4 d-flex flex-row-reverse">
+            <dx-button [disabled]="btn_Compra" class="favorites" [text]="
+            currentToken.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES
+          " icon="favorites" [height]="44" (onClick)="changeFavoriteState($event)">
+            </dx-button>
+
+          </div>
+          
+          <div class="col-6">
+            <div class="images">
+              <img src="{{ currentToken.img }}" />
+            </div>
+
+          </div>
+          <div class="col-6">
+            <div class="images">
+              <img src="{{ currentToken.img.replace('.jpg', 'b.jpg') }}" />
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>{{ currentToken.description }}</div>
+      </div>
+    </dx-popup>
+  </div>
+</div>

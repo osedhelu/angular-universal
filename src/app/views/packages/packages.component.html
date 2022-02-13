@@ -74,8 +74,8 @@
                 currentHouse.Price | currency: " ":"symbol":"1.00": "it"
                 }}</div>
               <div class="opacity">{{ currentHouse?.name }}
-                <br> <b>receives: </b> ${{ currentHouse?.receives | currency: " ":"symbol":"1.00": "it"}}
-                <br> <b>commission: </b> {{ currentHouse.commission | currency: " ":"symbol":"1.00": "it"}}
+                <br> <b>Receive YAZ: </b> ${{ currentHouse?.utility | currency: " ":"symbol":"1.00": "it"}}
+                <br> <b>Commission: </b> {{ currentHouse.commission | currency: " ":"symbol":"1.00": "it"}}
               </div>
               <dx-button [disabled]="btnComprar" class="favorites" [text]="
             currentHouse.Favorite ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES

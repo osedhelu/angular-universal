@@ -20,18 +20,15 @@
               <foreignObject x="81%" y="30%" width="30" height="24">
                 <i [class]="'template-title flag-icon flag-icon-'+item.dataItem.country?.iso2.toLocaleLowerCase()"
                   xmlns="http://www.w3.org/1999/xhtml">
-
                 </i>
               </foreignObject>
 
+              <foreignObject x="90%" y="5%" width="30" height="24">
+                <div [ngClass]="item.dataItem.userVentas.length===0?'txdanger':'txsuccess'" id="circulo"></div>
+              </foreignObject>
               <foreignObject x="32%" y="64%" width="65" height="36">
-
                 <button (click)="showInfo(item.dataItem)" class="btn btn-primary btn-ms p-1">Show Detail</button>
               </foreignObject>
-              <!-- <text class="template-button" style="cursor: pointer; background: blue;" -->
-              <!-- (click)="showInfo(item.dataItem)"> -->
-              <!-- Show Details -->
-              <!-- </text> -->
             </svg>
             <dxo-nodes [dataSource]="dataSource" keyExpr="_id" [typeExpr]="itemTypeExpr" parentKeyExpr="patrocinador">
               <dxo-auto-layout type="tree"></dxo-auto-layout>

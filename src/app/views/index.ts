@@ -39,6 +39,15 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 loadChildren: () => import('@views/withdraw/withdraw.module').then((m) => m.WithdrawModule)
+            },
+
+            {
+                path: '',
+                loadChildren: () => import('@views/userEdit/userEdit.module').then((m) => m.userEditModule)
+            },
+            {
+                path: '',
+                loadChildren: () => import('@views/token/token.module').then((m) => m.TokenModule).catch((e) => console.log(e))
             }
         ]
     }

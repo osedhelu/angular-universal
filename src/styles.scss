@@ -6,3 +6,16 @@
 @import "./assets/demo.css";
 @import "~devexpress-diagram/dist/dx-diagram.min.css";
 @import "~devextreme/dist/css/dx.carmine.compact.css";
+#circulo{
+   height:8px;
+   width:8px;
+   -moz-border-radius:50px;
+   -webkit-border-radius:50px;
+   border-radius:50px;
+}
+.txdanger {
+  background: rgb(230 16 16);
+}
+.txsuccess {
+  background: rgb(72, 245, 49);
+}

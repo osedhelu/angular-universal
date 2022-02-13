@@ -15,6 +15,7 @@ export class iPackage {
   ID: number;
   Favorite: boolean;
   name: string;
+  utility: any
   receives: number;
   status: boolean;
   Price: number;

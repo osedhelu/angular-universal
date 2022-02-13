@@ -37,6 +37,7 @@ export class DiagramComponent implements OnInit {
   ngOnInit() {
     // this._alert.show()
     this._UserService.miRama().pipe(this.un).subscribe((resp: any) => {
+      console.log(resp)
       this.employees = resp;
       this.dataSource = new ArrayStore({
         key: '_id',

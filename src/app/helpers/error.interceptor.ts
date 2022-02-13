@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core'; // imports the class that provides local storage for token
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { catchError, filter, take, switchMap } from "rxjs/operators";
+import { ErrorHandler, Injectable } from '@angular/core'; // imports the class that provides local storage for token
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from "rxjs/operators";
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertService, aling, from, status } from '@services/alertService/alert.service';
@@ -8,13 +8,11 @@ import { AlertService, aling, from, status } from '@services/alertService/alert.
 @Injectable({
   providedIn: 'root'
 })
-export class AuthInterceptorService implements HttpInterceptor {
+export class AuthInterceptorService implements HttpInterceptor, ErrorHandler {
   constructor(private router: Router, private _alert: AlertService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    // _("Interception In Progress"); // Interception Stage
     const token: string = localStorage.getItem('token'); // This retrieves a token from local storage
     req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });// This clones HttpRequest and Authorization header with Bearer token added
-    // req = req.clone({ headers: req.headers.set('token-eth', token) });// This clones HttpRequest and Authorization header with Bearer token added
     req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
     req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
     return next.handle(req)
@@ -36,5 +34,13 @@ export class AuthInterceptorService implements HttpInterceptor {
           return throwError(error); // any further errors are returned to frontend                    
         })
       );
+  }
+  handleError(error: any): void {
+    const chunkFailedMessage = /Loading chunk [\d]+ failed/;
+    console.log(error)
+
+    if (chunkFailedMessage.test(error.message)) {
+      window.location.reload();
+    }
   }
 }

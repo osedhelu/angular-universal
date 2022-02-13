@@ -29,6 +29,7 @@ export const ROUTES: RouteInfo[] = [
 ]
 export const ROUTESdefaul: RouteInfo[] = [
   { path: '/packages', title: 'PACKS', icon: 'location_map-big', class: '' },
+  { path: '/token', title: 'TOKENS', icon: 'location_map-big', class: '' },
 ]
 @Component({
   selector: 'app-sidebar',
@@ -46,13 +47,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.menuItems = ROUTESdefaul
+
+    this.getURLDefaul()
     this._s.close.pipe(this.un).subscribe((event) => {
+
       // _("service sockert sidebar", event)
       if (event) {
         this.menuItems = ROUTES.filter((menuItem) => menuItem)
       } else {
-        this.menuItems = ROUTESdefaul
+        this.getURLDefaul()
       }
     })
   }
@@ -62,6 +65,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
     return true
   }
+  getURLDefaul() {
+    this.menuItems = ROUTESdefaul
+  }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next()
     this._unsubscribeAll.complete()

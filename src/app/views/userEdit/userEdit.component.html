@@ -1,0 +1,77 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <dx-data-grid id="gridContainer" [dataSource]="dataSource" keyExpr="_id" [allowColumnReordering]="true"
+        [showBorders]="true" (onEditingStart)="EditEvent($event)" (onInitNewRow)="logEvent('InitNewRow')"
+        (onRowInserting)="logEvent('RowInserting')" (onRowInserted)="logEvent('RowInserted')"
+        (onRowUpdating)="SaveUser($event)" (onRowUpdated)="logEvent('RowUpdated')"
+        (onRowRemoving)="logEvent('RowRemoving')" (onRowRemoved)="logEvent('RowRemoved')"
+        (onSaving)="logEvent('RowUpdating')" (onSaved)="logEvent('Saving')"
+        (onEditCanceling)="logEvent('EditCanceling')" (onEditCanceled)="logEvent('EditCanceled')">
+        <dxo-paging [enabled]="true"></dxo-paging>
+        <dxo-editing mode="row" [allowUpdating]="true">
+        </dxo-editing>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxi-column dataField="username" caption="Username" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="nombre" caption="Name"></dxi-column>
+        <dxi-column dataField="apellidos" caption="Lastname"></dxi-column>
+        <dxi-column dataField="email" caption="Email"></dxi-column>
+        <dxi-column dataField="celular" cellTemplate="cellPhone" caption="phone">
+          <div *dxTemplate="let info of 'cellPhone'">
+            {{info.row.data.celular}}
+          </div>
+        </dxi-column>
+        <dxi-column dataField="country" caption="Country">
+          <dxo-lookup [dataSource]="states" displayExpr="name" valueExpr="_id">
+          </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="patrocinador" caption="Sponsor">
+          <dxo-lookup [dataSource]="arrayUser" displayExpr="username" valueExpr="_id">
+          </dxo-lookup>
+        </dxi-column>
+        <!-- <dxi-column dataField="Picture" [width]="100" ></dxi-column> -->
+        <dxi-column dataField="address_wallet" [editCellTemplate]="false" [allowEditing]="false"
+          cellTemplate="cellTemplate" caption="bscscan">
+          <!-- <dxo-lookup [dataSource]="arrayUser" displayExpr="username" valueExpr="_id"> -->
+          <div *dxTemplate="let data of 'cellTemplate'">
+            <!-- <img [src]="data.value" /> -->
+            <a [href]="'https://bscscan.com/address/'+data.data.address_wallet" target="_blank"
+              rel="noopener noreferrer">
+              {{an(data)}}
+            </a>
+            <!-- {{an(data)}} -->
+          </div>
+          <!-- </dxo-lookup> -->
+        </dxi-column>
+        <dxi-column dataField="userVentas.length" [editCellTemplate]=" false" [allowEditing]="false"
+          cellTemplate="BuyAndSell" caption="ventas">
+          <div *dxTemplate="let data of 'BuyAndSell'">
+            <div [ngClass]="viewBuy(data)" id="circulo"></div>
+          </div>
+        </dxi-column>
+
+
+
+        <dxi-column type="buttons" [width]="110">
+          <dxi-button name="edit" icon="edit"></dxi-button>
+          <dxi-button name="save" icon="check"></dxi-button>
+          <dxi-button name="cancel" icon="close"></dxi-button>
+          <!-- <dxi-button name="delete"></dxi-button> -->
+        </dxi-column>
+      </dx-data-grid>
+
+      <!-- <div id="events">
+        <div>
+          <div class="caption"> Fired events </div>
+          <dx-button id="clear" text="Clear" (onClick)="clearEvents()"></dx-button>
+        </div>
+        <ul>
+          <li *ngFor="let event of events">{{ event }}</li>
+        </ul>
+      </div> -->
+
+    </div>
+  </div>
+</div>
