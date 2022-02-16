@@ -1,16 +1,21 @@
 $icomoon-font-family: "yafuz" !default;
-$icomoon-font-path: "fonts" !default;
+$icomoon-font-path: "../fonts" !default;
+
 $yafuz-error: "\f057";
 $yafuz-success: "\f058";
 $yafuz-warning: "\f059";
 $yafuz-info: "\f06a";
+$yafuz-eye: "\f06e";
+$yafuz-eye-slash: "\f070";
+
+
 @font-face {
-  font-family: 'yafuz';
-  src:  url('../fonts/yafuz.eot?sz5ekb');
-  src:  url('../fonts/yafuz.eot?sz5ekb#iefix') format('embedded-opentype'),
-    url('../fonts/yafuz.ttf?sz5ekb') format('truetype'),
-    url('../fonts/yafuz.woff?sz5ekb') format('woff'),
-    url('../fonts/yafuz.svg?sz5ekb#yafuz') format('svg');
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?m83ccw');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?m83ccw#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?m83ccw') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?m83ccw') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?m83ccw##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -18,7 +23,7 @@ $yafuz-info: "\f06a";
 
 [class^="yafuz-"], [class*=" yafuz-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'yafuz' !important;
+  font-family: '#{$icomoon-font-family}' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -31,15 +36,35 @@ $yafuz-info: "\f06a";
   -moz-osx-font-smoothing: grayscale;
 }
 
-.yafuz-error:before {
-  content: "\f057";
+.yafuz-error {
+  &:before {
+    content: $yafuz-error; 
+  }
 }
-.yafuz-success:before {
-  content: "\f058";
+.yafuz-success {
+  &:before {
+    content: $yafuz-success; 
+  }
 }
-.yafuz-warning:before {
-  content: "\f059";
+.yafuz-warning {
+  &:before {
+    content: $yafuz-warning; 
+  }
 }
-.yafuz-info:before {
-  content: "\f06a";
+.yafuz-info {
+  &:before {
+    content: $yafuz-info; 
+  }
 }
+.yafuz-eye {
+  &:before {
+    content: $yafuz-eye; 
+  }
+}
+.yafuz-eye-slash {
+  &:before {
+    content: $yafuz-eye-slash; 
+  }
+}
+
+

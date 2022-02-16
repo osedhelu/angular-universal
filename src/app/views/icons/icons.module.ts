@@ -8,7 +8,6 @@ const routes: Routes = [
     {
         path: 'icons',
         component: IconsComponent,
-        canActivate: [AuthGuard, MetamaskGuard],
     }
 ];
 @NgModule({
