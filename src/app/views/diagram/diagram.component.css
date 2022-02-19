@@ -1,3 +1,9 @@
 ::ng-deep #diagram {
   height: 74vh;
 }
+
+::ng-deep #textBlock {
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 1.6em;
+}

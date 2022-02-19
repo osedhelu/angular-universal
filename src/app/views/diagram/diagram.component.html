@@ -42,15 +42,23 @@
           <dx-popup [width]="300" [height]="280" [showTitle]="true" title="Information" [dragEnabled]="false"
             [closeOnOutsideClick]="true" [(visible)]="popupVisible">
             <div *dxTemplate="let data of 'content'">
-              <p>Full Name: <b>{{ currentEmployee.nombre }} {{currentEmployee.apellidos}}</b></p>
-              <p>Country: <b>{{ currentEmployee.country.name }} <i
-                    [class]="'flag-icon flag-icon-'+currentEmployee.country?.iso2.toLocaleLowerCase()"></i>
-                </b></p>
-              <p>Username: <b>{{ currentEmployee.username }}</b></p>
-              <p>Email: <b>{{ currentEmployee.email }}</b></p>
-              <p>Phone: <b> + {{currentEmployee.country.phone_code}} {{ currentEmployee.celular }}</b></p>
-              <p>Id: <b> <button type="button" (click)="getLink(currentEmployee._id)"
-                    class="btn btn-link btn-ms p-2 m-0">Link</button></b></p>
+              <dx-scroll-view width="100%" height="100%">
+                <p>Full Name: <b>{{ currentEmployee.nombre }} {{currentEmployee.apellidos}}</b></p>
+                <p>Country: <b>{{ currentEmployee.country.name }} <i
+                      [class]="'flag-icon flag-icon-'+currentEmployee.country?.iso2.toLocaleLowerCase()"></i>
+                  </b></p>
+                <p>Username: <b>{{ currentEmployee.username }}</b></p>
+                <p>Email: <b>{{ currentEmployee.email }}</b></p>
+                <p>Phone: <b> + {{currentEmployee.country.phone_code}} {{ currentEmployee.celular }}</b></p>
+                <p>Id: <b> <button type="button" (click)="getLink(currentEmployee._id)"
+                      class="btn btn-link btn-ms p-2 m-0">Link</button></b></p>
+                <div style="padding: 0;" *ngIf="currentEmployee?.userVentas.length" id="textBlock">
+                  <p>Compras:</p>
+                  <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let da of currentEmployee.userVentas">{{da.observation}}</li>
+                  </ul>
+                </div>
+              </dx-scroll-view>
             </div>
           </dx-popup>
 

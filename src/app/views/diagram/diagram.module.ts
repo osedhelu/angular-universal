@@ -7,6 +7,7 @@ import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDiagramModule } from 'devextreme-angular/ui/diagram';
 import { DiagramComponent } from './diagram.component';
 import { CommonModule } from '@angular/common';
+import { DxScrollViewModule } from 'devextreme-angular';
 const routes: Routes = [
     {
         path: 'diagram',
@@ -20,7 +21,8 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         DxDiagramModule,
-        DxPopupModule
+        DxPopupModule,
+        DxScrollViewModule
     ],
 
 })
