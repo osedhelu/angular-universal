@@ -29,8 +29,8 @@ export const ROUTES: RouteInfo[] = [
 
 ]
 export const ROUTESdefaul: RouteInfo[] = [
-  { path: '/packages', title: 'PACKS', icon: 'location_map-big', class: '' },
-  { path: '/token', title: 'TOKENS', icon: 'location_map-big', class: '' },
+  { path: '/packages', title: 'PACK NFT', icon: 'location_map-big', class: '' },
+  { path: '/token', title: 'PACK TOKEN', icon: 'location_map-big', class: '' },
 ]
 @Component({
   selector: 'app-sidebar',
