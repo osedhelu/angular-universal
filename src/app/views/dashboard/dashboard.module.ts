@@ -8,6 +8,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { DxChartModule, DxPieChartModule, DxSelectBoxModule } from 'devextreme-angular';
 import { DashboardService } from './dashboard.service';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 const routes: Routes = [
     {
         path: '',
@@ -23,7 +24,7 @@ const routes: Routes = [
         DxChartModule,
         DxSelectBoxModule,
         DxPieChartModule,
-        CommonModule
+        CommonModule,
 
     ],
     providers: [DashboardService]

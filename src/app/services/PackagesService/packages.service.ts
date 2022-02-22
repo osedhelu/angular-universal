@@ -54,5 +54,9 @@ export class PackagesService {
     let url = `${URL}/package/meses`;
     return this.http.post(url, null)
   }
+  getPorcentPack() {
+    let url = `${URL}/package/pack/porcent`;
+    return this.http.get(url)
+  }
 
 }

@@ -17,15 +17,7 @@ export class DataItem {
     total: number;
     itotal: number
 }
-const data: DataItem[] = [
-    { country: 'PACK 1', commodity: 'Available', total: 99.3, itotal: 1000 },
-    { country: 'PACK 1', commodity: 'Sold', total: 0.7, itotal: 1000 },
-    { country: 'PACK 2', commodity: 'Available', total: 99, itotal: 500 },
-    { country: 'PACK 2', commodity: 'Sold', total: 1, itotal: 500 },
-    { country: 'PACK 3', commodity: 'Available', total: 99.6, itotal: 250 },
-    { country: 'PACK 3', commodity: 'Sold', total: 0.4, itotal: 250 },
 
-];
 
 const cache = {};
 
@@ -70,13 +62,6 @@ const architecturesInfo: ArchitectureInfo[] = [{
 
 @Injectable()
 export class DashboardService {
-    getArchitecturesInfo(): ArchitectureInfo[] {
-        return architecturesInfo;
-    }
-    getData(country?: string): DataItem[] {
-        if (country) {
-            return cache[country] = cache[country] || data.filter((item) => item.country === country);
-        }
-        return data;
-    }
+  
+
 }

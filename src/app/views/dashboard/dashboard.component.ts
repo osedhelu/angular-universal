@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { PackagesService } from '@services/PackagesService/packages.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ArchitectureInfo, DashboardService } from './dashboard.service';
+import { ArchitectureInfo, DashboardService, DataItem } from './dashboard.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,10 +19,11 @@ export class DashboardComponent implements OnInit {
   architecturesInfo: ArchitectureInfo[];
   _unsubscribeAll!: Subject<any>
   un: any
+  data: any[] = []
+  cache: any = {}
 
   constructor(service: DashboardService, private _package: PackagesService) {
     this.service = service;
-    this.countries = new Set(service.getData().map((item) => item.country));
     this._unsubscribeAll = new Subject();
     this.un = takeUntil(this._unsubscribeAll);
     // this.architecturesInfo = service.getArchitecturesInfo();
@@ -45,14 +46,27 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getMesesPAckage()
-
+    this.getPackPorcent()
   }
 
+  getPackPorcent() {
+    this._package.getPorcentPack().subscribe((result: any) => {
+      console.log('xxxxxxxxxxxxxxx', result)
+      this.data = result.data
+      this.countries = new Set(this.getData().map((item) => item.country));
+    })
+  }
   async getMesesPAckage() {
     this._package.getPackagaFo().pipe(this.un).subscribe((resp: any) => {
       this.architecturesInfo = resp.data
       console.warn(resp)
     })
+  }
+  getData(country?: string): DataItem[] {
+    if (country) {
+      return this.cache[country] = this.cache[country] || this.data.filter((item) => item.country === country);
+    }
+    return this.data;
   }
 
 }
